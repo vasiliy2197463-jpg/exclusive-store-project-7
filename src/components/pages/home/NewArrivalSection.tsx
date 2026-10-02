@@ -1,14 +1,10 @@
 import BannerContent from "@/components/titles/BannerContent";
 import SectionDescription from "@/components/titles/SectionDescription";
 import SectionTitle from "@/components/titles/SectionTitle";
-import { getDict } from "@/dictionaries/dictionaries";
-import { getLocaleInServer } from "@/shared/utils";
-import { headers } from "next/headers";
+import { TLanguages } from "@/shared/types";
 import Image from "next/image";
 
-export default async function NewArrivalSection() {
-  const locale = getLocaleInServer(headers);
-  const dict = await getDict(locale);
+export default function NewArrivalSection({ locale, dict }: { locale: TLanguages; dict: any }) {
   return (
     <section className="felx flex-col space-y-10 max-2xl:space-y-8">
       <div className="space-y-7">
@@ -20,6 +16,7 @@ export default async function NewArrivalSection() {
           className="col-span-2 row-span-2 bg-[url(/images/home/ps5.webp)] bg-color-bg-1 bg-no-repeat bg-contain bg-bottom flex min-h-[480px] items-end p-10 rounded-sm max-sm:col-span-1 max-sm:min-h-[420px] max-sm:p-6"
         >
           <BannerContent
+            locale={locale}
             description={dict.pages.index.newArrival.ps5.description}
             title={dict.pages.index.newArrival.ps5.title}
           />
@@ -29,6 +26,7 @@ export default async function NewArrivalSection() {
         shadow-[inset_-100px_0_100px_10px_rgba(255,255,255,0.2)]"
         >
           <BannerContent
+            locale={locale}
             description={dict.pages.index.newArrival.women.description}
             title={dict.pages.index.newArrival.women.title}
           />
@@ -42,6 +40,7 @@ export default async function NewArrivalSection() {
             className="h-52 object-contain drop-shadow-[0_0_30px_rgba(255,255,255,0.2)] max-2xl:h-40"
           />
           <BannerContent
+            locale={locale}
             description={dict.pages.index.newArrival.speakers.description}
             title={dict.pages.index.newArrival.speakers.title}
             className="absolute bottom-0 left-0 p-10"
@@ -56,6 +55,7 @@ export default async function NewArrivalSection() {
             className="h-52 object-contain drop-shadow-[0_0_30px_rgba(255,255,255,0.2)] max-2xl:h-40"
           />
           <BannerContent
+            locale={locale}
             description={dict.pages.index.newArrival.perfume.description}
             title={dict.pages.index.newArrival.perfume.title}
             className="absolute bottom-0 left-0 p-10"

@@ -5,20 +5,18 @@ import TopHeader from "@/components/main/header/TopHeader";
 import NavigationTrain from "@/components/navigation_train";
 import { getDict } from "@/dictionaries/dictionaries";
 import { horizontalMarginLimit, topMarginSaving } from "@/shared/constants";
-import { getLocaleInServer } from "@/shared/utils";
 import { interMediumFont } from "fonts";
-import { headers } from "next/headers";
 import Link from "next/link";
 import { twMerge as tw } from "tailwind-merge";
 
 export default async function NotFound() {
-  const locale = getLocaleInServer(headers);
+  const locale = "en" as const;
   const dict = await getDict(locale);
   return (
     <>
       <header>
-        <TopHeader />
-        <MainHeader />
+        <TopHeader locale={locale} dict={dict} />
+        <MainHeader locale={locale} dict={dict} />
       </header>
       <main className="flex-grow bg-color-bg text-color-text-3 relative">
         <div
@@ -42,7 +40,7 @@ export default async function NotFound() {
           </Link>
         </div>
       </main>
-      <Footer />
+      <Footer locale={locale} dict={dict} />
     </>
   );
 }

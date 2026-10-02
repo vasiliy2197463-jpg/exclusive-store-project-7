@@ -6,12 +6,11 @@ import {
   horizontalMarginLimit,
   topMarginSaving,
 } from "@/shared/constants";
-import { getLocaleInServer } from "@/shared/utils";
-import { headers } from "next/headers";
+import { TLanguages } from "@/shared/types";
 import { twMerge as tw } from "tailwind-merge";
 
-export default async function page() {
-  const locale = getLocaleInServer(headers);
+export default async function page({ params }: { params: { lang: TLanguages } }) {
+  const locale = params.lang;
   const dict = await getDict(locale);
 
   return (

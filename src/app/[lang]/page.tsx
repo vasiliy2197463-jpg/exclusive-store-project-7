@@ -9,8 +9,11 @@ import SalesSection from "@/components/pages/home/SalesSection";
 import ServicesSection from "@/components/pages/home/ServicesSection";
 import { bottomMarginSaving, horizontalMarginLimit } from "@/shared/constants";
 import { twMerge as tw } from "tailwind-merge";
+import { TLanguages } from "@/shared/types";
+import { getDict } from "@/dictionaries/dictionaries";
 
-export default function Home() {
+export default async function Home({ params }: { params: { lang: TLanguages } }) {
+  const dict = await getDict(params.lang);
   return (
     <div
       className={tw(
@@ -24,17 +27,16 @@ export default function Home() {
         className="fixed bottom-12 right-20 z-10 max-lg:bottom-6 max-lg:right-6"
         isScrolling
       />
-      <BannerSideBarSection />
-      <SalesSection salesUntil={new Date("12-30-2023")} />
-      <CategoriesSection />
-      <BestSellingSection />
-      <AloneBannerSection salesUntil={new Date("12-10-2023")} />
-      <ProductsSection />
-      <NewArrivalSection />
-      <ServicesSection />
+      <BannerSideBarSection locale={params.lang} dict={dict} />
+      <SalesSection salesUntil={new Date("12-30-2023")} locale={params.lang} dict={dict} />
+      <CategoriesSection dict={dict} />
+      <BestSellingSection dict={dict} />
+      <AloneBannerSection salesUntil={new Date("12-10-2023")} dict={dict} />
+      <ProductsSection dict={dict} />
+      <NewArrivalSection locale={params.lang} dict={dict} />
+      <ServicesSection dict={dict} />
     </div>
   );
 }
-
 
 

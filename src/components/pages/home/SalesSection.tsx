@@ -6,17 +6,17 @@ import Link from "next/link";
 import ProductSwiper from "@/components/swiper/ProductSwiper";
 import { homeSalesSwiper } from "@/data";
 import ArrowButton from "@/components/buttons/arrow_button/ArrowButton";
-import { getLocaleInServer } from "@/shared/utils";
-import { headers } from "next/headers";
-import { getDict } from "@/dictionaries/dictionaries";
+import { TLanguages } from "@/shared/types";
 
 export default async function SalesSection({
   salesUntil,
+  locale,
+  dict,
 }: {
   salesUntil: Date;
+  locale: TLanguages;
+  dict: any;
 }) {
-  const locale = getLocaleInServer(headers);
-  const dict = await getDict(locale);
   return (
     <section className="flex flex-col gap-7 border-b border-color-divider pb-14 max-2xl:pb-10">
       <SectionTitle text={dict.pages.index.sales.title} />

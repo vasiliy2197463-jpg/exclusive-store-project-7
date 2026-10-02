@@ -1,11 +1,6 @@
-import { getDict } from "@/dictionaries/dictionaries";
-import { getLocaleInServer } from "@/shared/utils";
-import { headers } from "next/headers";
 import { VscSend as SendIcon } from "react-icons/vsc";
 
-export default async function FooterInput() {
-  const locale = getLocaleInServer(headers);
-  const dict = await getDict(locale);
+export default function FooterInput({ dict }: { dict: any }) {
   return (
     <div
       className="flex items-center justify-between gap-3 border-2 border-color-primary px-4 py-3 rounded-sm text-base

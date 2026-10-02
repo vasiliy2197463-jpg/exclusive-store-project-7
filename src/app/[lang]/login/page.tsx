@@ -6,13 +6,12 @@ import {
 import Image from "next/image";
 import { twMerge as tw } from "tailwind-merge";
 import { interMediumFont } from "fonts";
-import { getLocaleInServer } from "@/shared/utils";
-import { headers } from "next/headers";
+import { TLanguages } from "@/shared/types";
 import { getDict } from "@/dictionaries/dictionaries";
 import LoginForm from "@/components/pages/login/LoginForm";
 
-export default async function page() {
-  const locale = getLocaleInServer(headers);
+export default async function page({ params }: { params: { lang: TLanguages } }) {
+  const locale = params.lang;
   const dict = await getDict(locale);
 
   return (

@@ -2,19 +2,15 @@ import PrimaryButton from "@/components/buttons/PrimaryButton";
 import SecondaryTimeCalc from "@/components/time_calculating/SecondaryTimeCalc";
 import SectionDescription from "@/components/titles/SectionDescription";
 import SectionTitle from "@/components/titles/SectionTitle";
-import { getDict } from "@/dictionaries/dictionaries";
-import { getLocaleInServer } from "@/shared/utils";
-import { headers } from "next/headers";
 import Image from "next/image";
 
 export default async function AloneBannerSection({
   salesUntil,
+  dict,
 }: {
   salesUntil: Date;
+  dict: any;
 }) {
-  const locale = getLocaleInServer(headers);
-  const dict = await getDict(locale);
-
   return (
     <section className="bg-color-bg-1 flex px-16 py-20 max-lg:flex-col max-lg:px-10 max-lg:py-12 max-sm:px-6 max-sm:py-8">
       <div className="flex flex-col items-start justify-between gap-8 flex-1">

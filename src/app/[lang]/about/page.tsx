@@ -10,12 +10,11 @@ import Image from "next/image";
 import AboutCard from "@/components/cards/about_card";
 import AboutEmployeesSwiper from "@/components/pages/about/AboutEmployeesSwiper";
 import ServiceCard from "@/components/cards/service_card";
-import { getLocaleInServer } from "@/shared/utils";
-import { headers } from "next/headers";
+import { TLanguages } from "@/shared/types";
 import { getDict } from "@/dictionaries/dictionaries";
 
-export default async function page() {
-  const locale = getLocaleInServer(headers);
+export default async function page({ params }: { params: { lang: TLanguages } }) {
+  const locale = params.lang;
   const dict = await getDict(locale);
   return (
     <div

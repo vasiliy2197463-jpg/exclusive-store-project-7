@@ -3,13 +3,8 @@ import ArrowButton from "@/components/buttons/arrow_button/ArrowButton";
 import SectionDescription from "@/components/titles/SectionDescription";
 import SectionTitle from "@/components/titles/SectionTitle";
 import CustomSwiper from "./CustomSwiper";
-import { getLocaleInServer } from "@/shared/utils";
-import { headers } from "next/headers";
-import { getDict } from "@/dictionaries/dictionaries";
 
-export default async function ProductsSection() {
-  const locale = getLocaleInServer(headers);
-  const dict = await getDict(locale);
+export default function ProductsSection({ dict }: { dict: any }) {
 
   return (
     <section className="flex flex-col gap-20 max-2xl:gap-10">

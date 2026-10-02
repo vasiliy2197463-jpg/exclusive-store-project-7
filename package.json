@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:pages": "node scripts/clean-build.mjs && GITHUB_ACTIONS=true next build && node scripts/fix-github-pages-paths.mjs",
     "start": "next start",
     "lint": "next lint"
   },

@@ -7,12 +7,11 @@ import {
 import { twMerge as tw } from "tailwind-merge";
 import FormSection from "@/components/pages/cart/check_out/FormSection";
 import TotalSection from "@/components/pages/cart/check_out/TotalSection";
-import { getLocaleInServer } from "@/shared/utils";
-import { headers } from "next/headers";
+import { TLanguages } from "@/shared/types";
 import { getDict } from "@/dictionaries/dictionaries";
 
-export default async function page() {
-  const locale = getLocaleInServer(headers);
+export default async function page({ params }: { params: { lang: TLanguages } }) {
+  const locale = params.lang;
   const dict = await getDict(locale);
   return (
     <div

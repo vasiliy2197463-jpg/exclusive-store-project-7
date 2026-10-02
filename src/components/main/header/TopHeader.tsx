@@ -3,13 +3,9 @@ import Link from "next/link";
 import { twMerge as tw } from "tailwind-merge";
 import { poppinsSemiBoldFont } from "fonts";
 import HeaderLangDropdown from "./HeaderLangDropdown";
-import { headers } from "next/headers";
-import { getDict } from "@/dictionaries/dictionaries";
-import { getLocaleInServer } from "@/shared/utils";
+import { TLanguages } from "@/shared/types";
 
-export default async function TopHeader() {
-  const locale = getLocaleInServer(headers);
-  const dict = await getDict(locale);
+export default function TopHeader({ locale, dict }: { locale: TLanguages; dict: any }) {
 
   return (
     <div className="bg-color-bg-1 text-color-text-1">

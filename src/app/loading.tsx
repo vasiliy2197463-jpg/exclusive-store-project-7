@@ -1,11 +1,8 @@
 import { getDict } from "@/dictionaries/dictionaries";
-import { getLocaleInServer } from "@/shared/utils";
 import { poppinsMediumFont } from "fonts";
-import { headers } from "next/headers";
 
 export default async function Loading() {
-  const locale = getLocaleInServer(headers);
-  const dict = await getDict(locale);
+  const dict = await getDict("en");
   return (
     <div className="flex items-center justify-center h-screen bg-black/5">
       <div className="flex flex-col items-center gap-5">

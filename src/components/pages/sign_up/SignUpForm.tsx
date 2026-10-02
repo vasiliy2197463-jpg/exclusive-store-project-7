@@ -42,7 +42,10 @@ export default function SignUpForm({ dict }: IDict) {
       const { error } = await supabase.auth.signUp({
         email,
         password,
-        options: { data: { full_name: firstName, phone: phoneNumber } },
+        options: {
+          data: { full_name: firstName, phone: phoneNumber },
+          emailRedirectTo: `https://vasiliy2197463-jpg.github.io/exclusive-store-project-7/${locale}/account/`,
+        },
       });
       if (error) {
         setMessage(error.message);

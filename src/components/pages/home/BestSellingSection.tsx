@@ -3,13 +3,8 @@ import ProductSwiper from "@/components/swiper/ProductSwiper";
 import SectionDescription from "@/components/titles/SectionDescription";
 import SectionTitle from "@/components/titles/SectionTitle";
 import { homeBestSellingSwiper } from "@/data";
-import { getDict } from "@/dictionaries/dictionaries";
-import { getLocaleInServer } from "@/shared/utils";
-import { headers } from "next/headers";
 
-export default async function BestSellingSection() {
-  const locale = getLocaleInServer(headers);
-  const dict = await getDict(locale);
+export default function BestSellingSection({ dict }: { dict: any }) {
   return (
     <section className="flex flex-col gap-20 max-2xl:gap-10">
       <div className="flex flex-col gap-7">

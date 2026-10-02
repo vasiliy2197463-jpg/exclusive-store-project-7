@@ -9,14 +9,10 @@ import Link from "next/link";
 import { twMerge as tw } from "tailwind-merge";
 import { AiOutlineInstagram as InstagramIcon } from "react-icons/ai";
 import { FaTelegramPlane as TelegramIcon, FaVk as VkIcon } from "react-icons/fa";
-import { getLocaleInServer } from "@/shared/utils";
-import { headers } from "next/headers";
-import { getDict } from "@/dictionaries/dictionaries";
 import SiteQrCode from "./SiteQrCode";
+import { TLanguages } from "@/shared/types";
 
-export default async function Footer() {
-  const locale = getLocaleInServer(headers);
-  const dict = await getDict(locale);
+export default function Footer({ locale, dict }: { locale: TLanguages; dict: any }) {
   const qrText = locale === "ru" ? "Открыть сайт на телефоне" : locale === "tm" ? "Saýty telefonda açyň" : "Open the site on your phone";
   const instagramUrl = process.env.NEXT_PUBLIC_INSTAGRAM_URL || "https://www.instagram.com/";
   const telegramUrl = process.env.NEXT_PUBLIC_TELEGRAM_URL || "https://t.me/";
@@ -45,24 +41,24 @@ export default async function Footer() {
             <p className="text-lg max-2xl:text-base">
               {dict.footer.otherTexts["10%Off"]}
             </p>
-            <FooterInput />
+            <FooterInput dict={dict} />
           </div>
         </div>
         <div className="flex flex-col items-start gap-3 flex-[1_0_17%] max-3xl:flex-[1_0_20%]">
           <FooterTitle text={dict.footer.otherTexts.support} />
-          {dict.footer.footerNav.map((item, i) => (
+          {dict.footer.footerNav.map((item: any, i: number) => (
             <FooterLink key={i} {...item} isIndependent />
           ))}
         </div>
         <div className="flex flex-col items-start gap-3 flex-[1_0_10%] max-3xl:flex-[1_0_20%]">
           <FooterTitle text={dict.footer.otherTexts.account} />
-          {dict.footer.footerNav1.map((item, i) => (
+          {dict.footer.footerNav1.map((item: any, i: number) => (
             <FooterLink isIndependent={false} key={i} {...item} />
           ))}
         </div>
         <div className="flex flex-col items-start gap-3 flex-[1_0_10%] max-3xl:flex-[1_0_20%]">
           <FooterTitle text={dict.footer.otherTexts.quickLink} />
-          {dict.footer.footerNav2.map((item, i) => (
+          {dict.footer.footerNav2.map((item: any, i: number) => (
             <FooterLink isIndependent={false} key={i} {...item} />
           ))}
         </div>

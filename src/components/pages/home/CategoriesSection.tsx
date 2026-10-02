@@ -2,13 +2,8 @@ import ArrowButton from "@/components/buttons/arrow_button/ArrowButton";
 import CategorySwiper from "@/components/swiper/CategorySwiper";
 import SectionDescription from "@/components/titles/SectionDescription";
 import SectionTitle from "@/components/titles/SectionTitle";
-import { getDict } from "@/dictionaries/dictionaries";
-import { getLocaleInServer } from "@/shared/utils";
-import { headers } from "next/headers";
 
-export default async function CategoriesSection() {
-  const locale = getLocaleInServer(headers);
-  const dict = await getDict(locale);
+export default function CategoriesSection({ dict }: { dict: any }) {
   return (
     <section className="flex flex-col gap-7 border-b border-color-divider pb-14">
       <SectionTitle text={dict.pages.index.category.title} />
