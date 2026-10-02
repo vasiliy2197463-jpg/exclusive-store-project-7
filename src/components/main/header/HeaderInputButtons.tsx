@@ -7,12 +7,12 @@ import { FiSearch as SearchIcon } from "react-icons/fi";
 import { useRecoilValue } from "recoil";
 import {
   cartProductsState,
-  credentialsState,
   favoriteProductsState,
 } from "@/shared/recoil_states/atoms";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { ILangPropsToComponent } from "@/shared/types";
+import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
 export default function HeaderInputButtons({
   dict,
@@ -22,8 +22,7 @@ export default function HeaderInputButtons({
   const [amount, setAmount] = useState(0);
   const amountOfCart = useRecoilValue(cartProductsState);
   const [amountCart, setAmountCart] = useState(0);
-  const credentials = useRecoilValue(credentialsState);
-  const [isLoged, setIsLoged] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
 
   useEffect(() => {
     setAmount(amountOfFavorites.length);
@@ -36,8 +35,14 @@ export default function HeaderInputButtons({
   }, [amountOfCart]);
 
   useEffect(() => {
-    setIsLoged(credentials.firstName.length === 0 ? false : true);
-  }, [credentials]);
+    const supabase = getSupabaseBrowserClient();
+    if (!supabase) return;
+    supabase.auth.getSession().then(({ data }) => setIsLogged(Boolean(data.session)));
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsLogged(Boolean(session));
+    });
+    return () => listener.subscription.unsubscribe();
+  }, []);
 
   return (
     <>
@@ -65,7 +70,11 @@ export default function HeaderInputButtons({
         )}
         <CartIcon className="w-7 h-7 max-3xl:w-6 max-3xl:h-6 max-2xl:w-5 max-2xl:h-5" />
       </Link>
-      <Link href={isLoged ? `/${lang}/account` : `/${lang}/sign-up`}>
+      <Link
+        href={isLogged ? `/${lang}/account` : `/${lang}/login`}
+        aria-label={isLogged ? "Открыть профиль" : "Войти в аккаунт"}
+        title={isLogged ? "Профиль" : "Войти"}
+      >
         <UserIcon className="w-7 h-7 max-3xl:w-6 max-3xl:h-6 max-2xl:w-5 max-2xl:h-5" />
       </Link>
     </>
