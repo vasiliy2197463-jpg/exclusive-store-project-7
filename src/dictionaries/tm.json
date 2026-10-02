@@ -1,0 +1,672 @@
+{
+  "header": {
+    "topHeader": {
+      "text": "Tomusky arzanladyş hemme tomus eşiklere - SKIDKA 50%!",
+      "href": "ShopNow"
+    },
+    "links": [
+      {
+        "href": "",
+        "text": "baş sahypa"
+      },
+      {
+        "href": "contact",
+        "text": "habarlaşmak"
+      },
+      {
+        "href": "about",
+        "text": "barada"
+      },
+      {
+        "href": "sign-up",
+        "text": "Ulgama girmek"
+      }
+    ],
+    "searchPlaceholder": "Nädip gözleýärsiňiz?"
+  },
+  "pages": {
+    "aboutUs": {
+      "section1": {
+        "title": "biziň taryhymyz",
+        "text1": "2015-nji ýylda satuwa çykarylan “Exclusive”, Bangladeşde güýçli gatnaşýan Günorta Aziýanyň öňdebaryjy onlaýn bazarydyr. Giňişleýin marketing, maglumatlar we hyzmat çözgütleri bilen goldanýan “Exclusive” -da 10,500 täjir we 300 marka bar, sebitde 3 million müşderä hyzmat edýär.",
+        "text2": "“Exclusive” portfelinde 1 milliondan gowrak önüm bar we çalt ösýär. Kompaniýa sarp edijiler üçin dürli önüm kategoriýalaryny hödürleýär."
+      },
+      "section2": {
+        "aboutCards": [
+          {
+            "title": "10.5k",
+            "subtitle": "Sahypamyzdaky satyjylar"
+          },
+          {
+            "title": "33k",
+            "subtitle": "Her aýlyk satylyş çalşygy"
+          },
+          {
+            "title": "45.5k",
+            "subtitle": "Sahypamyzdaky müşderiler sany"
+          },
+          {
+            "title": "25k",
+            "subtitle": "Sahypamyzdaky ýyllyk satylyşlar"
+          }
+        ]
+      },
+      "section3": {
+        "employeeCards": [
+          {
+            "href": {
+              "instagram": "#",
+              "linkedin": "#",
+              "twitter": "#"
+            },
+            "image": "luchik-team.png",
+            "name": "Luchik",
+            "status": "stiliň we gowy keýpiň başlygy"
+          },
+          {
+            "href": {
+              "instagram": "#",
+              "linkedin": "#",
+              "twitter": "#"
+            },
+            "image": "kuzya-team.png",
+            "name": "Kuzya",
+            "status": "iýmit we möhüm kararlar boýunça direktor"
+          },
+          {
+            "href": {
+              "instagram": "#",
+              "linkedin": "#",
+              "twitter": "#"
+            },
+            "image": "vitalik-team.png",
+            "name": "Vitalik",
+            "status": "howpsuzlyk we guty barlagynyň başlygy"
+          },
+          {
+            "href": {
+              "instagram": "#",
+              "linkedin": "#",
+              "twitter": "#"
+            },
+            "image": "employee-1.webp",
+            "name": "tom crouise",
+            "status": "Dörediji we başyny tutan"
+          },
+          {
+            "href": {
+              "instagram": "#",
+              "linkedin": "#",
+              "twitter": "#"
+            },
+            "image": "employee-2.webp",
+            "name": "emma watson",
+            "status": "direktor"
+          },
+          {
+            "href": {
+              "instagram": "#",
+              "linkedin": "#",
+              "twitter": "#"
+            },
+            "image": "employee-3.webp",
+            "name": "will smith",
+            "status": "ýerine ýetiriji dizaýner"
+          },
+          {
+            "href": {
+              "instagram": "#",
+              "linkedin": "#",
+              "twitter": "#"
+            },
+            "image": "employee-1.webp",
+            "name": "tom crouise",
+            "status": "Dörediji we başyny tutan"
+          },
+          {
+            "href": {
+              "instagram": "#",
+              "linkedin": "#",
+              "twitter": "#"
+            },
+            "image": "employee-2.webp",
+            "name": "emma watson",
+            "status": "direktor"
+          },
+          {
+            "href": {
+              "instagram": "#",
+              "linkedin": "#",
+              "twitter": "#"
+            },
+            "image": "employee-3.webp",
+            "name": "will smith",
+            "status": "ýerine ýetiriji dizaýner"
+          }
+        ]
+      },
+      "section4": {
+        "services": [
+          {
+            "title": "MUGT WE TIZ ELTIP BERMEK",
+            "subtitle": "140 dollardan geçen ähli sargytly ulanyşlar üçin dastawka mugt",
+            "image": "delivery.svg"
+          },
+          {
+            "title": "24/7 MÜŞDERI KÖMEGI",
+            "subtitle": "Dostlaşyk 24/7 müşderi gatnaşyk",
+            "image": "support.svg"
+          },
+          {
+            "title": "PUL GARANTIÝASY",
+            "subtitle": "30 günlük dowamlykda pul yzyna gaýtarylyp bilner",
+            "image": "safety.svg"
+          }
+        ]
+      }
+    },
+    "account": {
+      "yourProfile": "Siziň profiliňiz",
+      "name": "ady",
+      "password": "parol",
+      "city": "şäher",
+      "streetAddress": "köçe salgy",
+      "apartment": "kwartira",
+      "companyName": "kompaniýaň ady",
+      "email": "e-poçta",
+      "phoneNumber": "telefon belgi"
+    },
+    "cart": {
+      "checkOut": {
+        "form": {
+          "title": "Söwdaň detallary",
+          "firstName": "Ady",
+          "companyName": "Kompaniýaň ady",
+          "streetAddress": "Köçe salgysy",
+          "apartment": "Kwartira",
+          "phoneNumber": "Telefon belgi",
+          "city": "Şäher",
+          "email": "E-poçta salgysy",
+          "checkbox": "bu maglumatlary ýatda saklaň, soňraky söwda üçin"
+        },
+        "priceSection": {
+          "subtotal": "Jemi (dastawkasyz)",
+          "shipping": "Dastawka",
+          "total": "Jemi",
+          "payment": {
+            "bank": "Bank",
+            "cash": "Nagt tölegi"
+          },
+          "coupon": {
+            "placeholder": "Kupon kody",
+            "apply": "Kupon ulan"
+          },
+          "order": "sargyt bermek"
+        }
+      },
+      "topLevelTexts": {
+        "product": "önüm",
+        "price": "baha",
+        "quantity": "sany",
+        "subtotal": "jemi"
+      },
+      "buttons": {
+        "return": "yzyna gaýtarmak",
+        "update": "söwda harytalaryny täzeläň",
+        "apply": "kupon ulan",
+        "process": "sargyt bermek üçin",
+        "applyPlaceholder": "Kuponyň Kody"
+      },
+      "cartTotal": {
+        "title": "Söwda jemi",
+        "subtotal": "Jemi (dastawkasyz)",
+        "shipping": "Dastawka",
+        "total": "Jemi"
+      }
+    },
+    "contact": {
+      "infoSection": {
+        "callPart": {
+          "call": "Biz bilen jaňlaşyň",
+          "text": "Biz 24/7, hepdäniň 7 güni elýeterli bolup durýarys",
+          "phone": "Telefon: +8801611112222"
+        },
+        "writePart": {
+          "write": "Bize ýaz",
+          "text": "Haryt formasyny dolduruň we siz bilen 24 sagat içinde habarlaşarys.",
+          "emails": [
+            "E-poçtlar: customer@exclusive.com",
+            "E-poçtlar: support@exclusive.com"
+          ]
+        }
+      },
+      "form": {
+        "name": "Siziň adyňyz*",
+        "email": "Siziň e-poçtaňyz*",
+        "phone": "Siziň telefonyňyz*",
+        "message": "Habaryňyzy ýazyň",
+        "send": "Habary ugradyň"
+      }
+    },
+    "registration": {
+      "login": {
+        "title": "Hasabyňyza giriň",
+        "subtitle": "Aşakdaky maglumatlaryňyzy giriziň",
+        "emailOrPhone": "E-poçta ýa-da Telefon belgi",
+        "password": "Parol",
+        "login": "giriş",
+        "forgetPassword": "Paroly Unutdum"
+      },
+      "signUp": {
+        "title": "Akkaunt döretmek",
+        "subtitle": "Aşakdaky maglumatlaryňyzy giriziň",
+        "inputs": {
+          "name": "Ady",
+          "email": "E-poçta",
+          "phoneNumber": "Telefon belgi",
+          "password": "Parol"
+        },
+        "createAcc": "Akkaunt döretmek",
+        "signGoogle": "Google bilen döretmek",
+        "haveAccount": "Eýýäm akkaundyňyz bamy?",
+        "login": "Girmek"
+      }
+    },
+    "wishlist": {
+      "wishlist": "Halanlarym",
+      "moveAllBag": "Hemmezini karzina goý",
+      "forYou": "Siziň üçin",
+      "seeAll": "Ählisini görmek"
+    },
+    "index": {
+      "sideMenu": {
+        "plainMenu": [
+          {
+            "href": "electronics",
+            "name": "elektronika"
+          },
+          {
+            "href": "home-lifestyle",
+            "name": "hojalyk harytlar"
+          },
+          {
+            "href": "medicine",
+            "name": "dermanlar"
+          },
+          {
+            "href": "sport-outdoor",
+            "name": "sport"
+          },
+          {
+            "href": "baby-toys",
+            "name": "bäbegiň oýunjaklar"
+          },
+          {
+            "href": "groceries-pets",
+            "name": "öý haýwanlar akssesuarlar"
+          },
+          {
+            "href": "health-beauty",
+            "name": "saglyk & gözellik"
+          }
+        ],
+        "otherMenu": [
+          {
+            "menuItems": [
+              {
+                "href": "dress",
+                "name": "uly öý"
+              },
+              {
+                "href": "skirt",
+                "name": "etek"
+              },
+              {
+                "href": "blouse",
+                "name": "bluzka"
+              },
+              {
+                "href": "pants",
+                "name": "pantalony"
+              },
+              {
+                "href": "jacket",
+                "name": "jaýka"
+              },
+              {
+                "href": "coat",
+                "name": "palto"
+              },
+              {
+                "href": "sweater",
+                "name": "sweater"
+              },
+              {
+                "href": "top",
+                "name": "top"
+              },
+              {
+                "href": "jeans",
+                "name": "džins"
+              },
+              {
+                "href": "shorts",
+                "name": "şort"
+              },
+              {
+                "href": "scarf",
+                "name": "şarfy"
+              },
+              {
+                "href": "sunglasses",
+                "name": "gözlükler"
+              },
+              {
+                "href": "hat",
+                "name": "bäşlik"
+              },
+              {
+                "href": "heels",
+                "name": "ýokary ýakaglar"
+              },
+              {
+                "href": "flats",
+                "name": "düzýakaglar"
+              },
+              {
+                "href": "boots",
+                "name": "çizmeler"
+              },
+              {
+                "href": "sandals",
+                "name": "sandal"
+              },
+              {
+                "href": "handbag",
+                "name": "çanta"
+              },
+              {
+                "href": "clutch",
+                "name": "klatch"
+              },
+              {
+                "href": "necklace",
+                "name": "çepe"
+              }
+            ],
+            "menuName": "zenanlar üçin fason"
+          },
+          {
+            "menuItems": [
+              {
+                "href": "shirt",
+                "name": "köýnek"
+              },
+              {
+                "href": "t-shirt",
+                "name": "maýka"
+              },
+              {
+                "href": "polo",
+                "name": "polo"
+              },
+              {
+                "href": "sweater",
+                "name": "sweater"
+              },
+              {
+                "href": "hoodie",
+                "name": "hudiýe"
+              },
+              {
+                "href": "jacket",
+                "name": "jaýka"
+              },
+              {
+                "href": "coat",
+                "name": "palto"
+              },
+              {
+                "href": "blazer",
+                "name": "bleyzer"
+              },
+              {
+                "href": "pants",
+                "name": "pantalony"
+              },
+              {
+                "href": "jeans",
+                "name": "džins"
+              },
+              {
+                "href": "shorts",
+                "name": "şort"
+              },
+              {
+                "href": "sweatpants",
+                "name": "spor pantalony"
+              },
+              {
+                "href": "suits",
+                "name": "kostýumlar"
+              },
+              {
+                "href": "tie",
+                "name": "gala"
+              },
+              {
+                "href": "bowtie",
+                "name": "papyryk"
+              },
+              {
+                "href": "belt",
+                "name": "kemer"
+              },
+              {
+                "href": "socks",
+                "name": "joraplar"
+              },
+              {
+                "href": "shoes",
+                "name": "aýakgaplar"
+              },
+              {
+                "href": "sneakers",
+                "name": "sport aýakgaplar"
+              },
+              {
+                "href": "loafers",
+                "name": "baýýgyçlar"
+              },
+              {
+                "href": "boots",
+                "name": "çizmeler"
+              }
+            ],
+            "menuName": "erkekler üçin fason"
+          }
+        ]
+      },
+      "sales": {
+        "title": "şu günki",
+        "description": "uly satyşlar",
+        "days": "Gün",
+        "hours": "Sagat",
+        "minutes": "Minut",
+        "seconds": "sekund",
+        "viewAll": "Ählisini gör"
+      },
+      "category": {
+        "title": "kategoriýalar",
+        "description": "kategoriýa boýunça gözle",
+        "categories": [
+          {
+            "title": "telefonlar",
+            "icon": "PhoneIcon"
+          },
+          {
+            "title": "kompýuterler",
+            "icon": "ComputerIcon"
+          },
+          {
+            "title": "akyllySagatlar",
+            "icon": "WatchIcon"
+          },
+          {
+            "title": "kamera",
+            "icon": "CameraIcon"
+          },
+          {
+            "title": "aýakgaplar",
+            "icon": "HeadPhonesIcon"
+          },
+          {
+            "title": "oýunlar",
+            "icon": "GamingIcon"
+          },
+          {
+            "title": "kompýuterler",
+            "icon": "ComputerIcon"
+          },
+          {
+            "title": "akyllySagatlar",
+            "icon": "WatchIcon"
+          },
+          {
+            "title": "aýakgaplar",
+            "icon": "HeadPhonesIcon"
+          }
+        ]
+      },
+      "bestSelling": {
+        "title": "bu aýdaky",
+        "description": "gowy satylýan harytlar",
+        "viewAll": "Ählisini Gör"
+      },
+      "banner": {
+        "title": "kategoriýalar",
+        "description": "saz diňlemekden täze tejtibe al",
+        "days": "Gün",
+        "minutes": "Minut",
+        "seconds": "sekund",
+        "hours": "Sagat",
+        "buy": "häzir satyn al"
+      },
+      "products": {
+        "title": "biziň harytlarymyz",
+        "description": "biziň harytlarymyza syn et",
+        "viewAll": "Ählisini gör"
+      },
+      "newArrival": {
+        "title": "Täze",
+        "description": "täze gelen harytlar",
+        "ps5": {
+          "title": "PlayStation 5",
+          "description": "PS5-iň gara we ak reňkli täze modeller"
+        },
+        "women": {
+          "title": "Zenanyň kolleksiýalary",
+          "description": "Zenanlar üçin aýratyn kolleksiýalar"
+        },
+        "speakers": {
+          "title": "Kolonkalar",
+          "description": "Amazon kabellsiz kolonkalar"
+        },
+        "perfume": {
+          "title": "Parfüm",
+          "description": "GUCCI INTENSE OUD EDP"
+        }
+      },
+      "services": [
+        {
+          "title": "MUGT WE TIZ ELTIP BERMEK",
+          "subtitle": "140 dollardan geçen ähli sargytly ulanyşlar üçin dastawka mugt",
+          "image": "delivery.svg"
+        },
+        {
+          "title": "24/7 MÜŞDERI KÖMEGI",
+          "subtitle": "Dostlaşyk 24/7 müşderi gatnaşyk",
+          "image": "support.svg"
+        },
+        {
+          "title": "PUL GARANTIÝASY",
+          "subtitle": "30 günlük dowamlykda pul yzyna gaýtarylyp bilner",
+          "image": "safety.svg"
+        }
+      ]
+    },
+    "notFound": {
+      "title": "404 not found",
+      "description": "Bu sahypa tapylmady. Siz baş sahypamyza geçmegi maslahat berýäris",
+      "button": "Baş sahypa geçmek"
+    },
+    "loading": "Ýüklenip dur, garaşyň..."
+  },
+  "footer": {
+    "footerNav": [
+      {
+        "text": "111 Bijoy sarani, Dhaka,  DH 1515, Bangladesh.",
+        "href": "https://www.google.com/maps/search/111+Bijoy+sarani,+Dhaka,++DH+1515,+Bangladesh./@23.7643021,90.3864755,17z/data=!3m1!4b1?entry=ttu"
+      },
+      {
+        "text": "exclusive@gmail.com",
+        "href": "malito:exclusive@gmail.com"
+      },
+      {
+        "text": "+88015-88888-9999",
+        "href": "tel:+88015-88888-9999"
+      }
+    ],
+    "footerNav1": [
+      {
+        "text": "Meniň Akkauntym",
+        "href": "account"
+      },
+      {
+        "text": "Giriş / Hasaba almak",
+        "href": "account"
+      },
+      {
+        "text": "Sebet",
+        "href": "cart"
+      },
+      {
+        "text": "Gowy görenlerim",
+        "href": "wishlist"
+      },
+      {
+        "text": "Market",
+        "href": "shop"
+      }
+    ],
+    "footerNav2": [
+      {
+        "text": "Gizlinlik Siýasaty",
+        "href": "privacy-policy"
+      },
+      {
+        "text": "Ulanyş Şertnamasy",
+        "href": "#"
+      },
+      {
+        "text": "Soraglar",
+        "href": "faq"
+      },
+      {
+        "text": "Habarlaşmak",
+        "href": "contact"
+      }
+    ],
+    "otherTexts": {
+      "subscribe": "abuna bol",
+      "10%Off": "Ilkinji tölegiňizde 10% alyn",
+      "emailPlaceholder": "E-mailiňizi ýazyň",
+      "downloadApp": "programmany ýükla",
+      "saveNewUser": "Täze ulanyjylar üçin 3$ jemle",
+      "copyRight": "Rimel 2022. Ähli hukuklar goralan",
+      "support": "Kömek",
+      "account": "Akkaunt",
+      "quickLink": "Ssylka"
+    }
+  }
+}

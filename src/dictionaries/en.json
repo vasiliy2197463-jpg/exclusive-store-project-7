@@ -1,0 +1,672 @@
+{
+  "header": {
+    "topHeader": {
+      "text": "Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!",
+      "href": "ShopNow"
+    },
+    "links": [
+      {
+        "href": "",
+        "text": "home"
+      },
+      {
+        "href": "contact",
+        "text": "contact"
+      },
+      {
+        "href": "about",
+        "text": "about"
+      },
+      {
+        "href": "sign-up",
+        "text": "sign up"
+      }
+    ],
+    "searchPlaceholder": "What are you looking for?"
+  },
+  "pages": {
+    "aboutUs": {
+      "section1": {
+        "title": "our story",
+        "text1": "Launced in 2015, Exclusive is South Asia’s premier online shopping makterplace with an active presense in Bangladesh. Supported by wide range of tailored marketing, data and service solutions, Exclusive has 10,500 sallers and 300 brands and serves 3 millioons customers across the region.",
+        "text2": "Exclusive has more than 1 Million products to offer, growing at a very fast. Exclusive offers a diverse assotment in categories ranging from consumer."
+      },
+      "section2": {
+        "aboutCards": [
+          {
+            "title": "10.5k",
+            "subtitle": "Sallers active our site"
+          },
+          {
+            "title": "33k",
+            "subtitle": "Mopnthly Produduct Sale"
+          },
+          {
+            "title": "45.5k",
+            "subtitle": "Customer active in our site"
+          },
+          {
+            "title": "25k",
+            "subtitle": "Anual gross sale in our site"
+          }
+        ]
+      },
+      "section3": {
+        "employeeCards": [
+          {
+            "href": {
+              "instagram": "#",
+              "linkedin": "#",
+              "twitter": "#"
+            },
+            "image": "luchik-team.png",
+            "name": "Luchik",
+            "status": "chief of style and good moods"
+          },
+          {
+            "href": {
+              "instagram": "#",
+              "linkedin": "#",
+              "twitter": "#"
+            },
+            "image": "kuzya-team.png",
+            "name": "Kuzya",
+            "status": "director of snacks and important decisions"
+          },
+          {
+            "href": {
+              "instagram": "#",
+              "linkedin": "#",
+              "twitter": "#"
+            },
+            "image": "vitalik-team.png",
+            "name": "Vitalik",
+            "status": "head of security and box inspection"
+          },
+          {
+            "href": {
+              "instagram": "#",
+              "linkedin": "#",
+              "twitter": "#"
+            },
+            "image": "employee-1.webp",
+            "name": "tom crouise",
+            "status": "founder & chairman"
+          },
+          {
+            "href": {
+              "instagram": "#",
+              "linkedin": "#",
+              "twitter": "#"
+            },
+            "image": "employee-2.webp",
+            "name": "emma watson",
+            "status": "managing director"
+          },
+          {
+            "href": {
+              "instagram": "#",
+              "linkedin": "#",
+              "twitter": "#"
+            },
+            "image": "employee-3.webp",
+            "name": "will smith",
+            "status": "product designer"
+          },
+          {
+            "href": {
+              "instagram": "#",
+              "linkedin": "#",
+              "twitter": "#"
+            },
+            "image": "employee-1.webp",
+            "name": "tom crouise",
+            "status": "founder & chairman"
+          },
+          {
+            "href": {
+              "instagram": "#",
+              "linkedin": "#",
+              "twitter": "#"
+            },
+            "image": "employee-2.webp",
+            "name": "emma watson",
+            "status": "managing director"
+          },
+          {
+            "href": {
+              "instagram": "#",
+              "linkedin": "#",
+              "twitter": "#"
+            },
+            "image": "employee-3.webp",
+            "name": "will smith",
+            "status": "product designer"
+          }
+        ]
+      },
+      "section4": {
+        "services": [
+          {
+            "title": "FREE AND FAST DELIVERY",
+            "subtitle": "Free delivery for all orders over $140",
+            "image": "delivery.svg"
+          },
+          {
+            "title": "24/7 CUSTOMER SERVICE",
+            "subtitle": "Friendly 24/7 customer support",
+            "image": "support.svg"
+          },
+          {
+            "title": "MONEY BACK GUARANTEE",
+            "subtitle": "We reurn money within 30 days",
+            "image": "safety.svg"
+          }
+        ]
+      }
+    },
+    "account": {
+      "yourProfile": "Your profile",
+      "name": "name",
+      "password": "password",
+      "city": "city",
+      "streetAddress": "street address",
+      "apartment": "apartment",
+      "companyName": "company name",
+      "email": "email",
+      "phoneNumber": "phone number"
+    },
+    "cart": {
+      "checkOut": {
+        "form": {
+          "title": "billing details",
+          "firstName": "first name",
+          "companyName": "company name",
+          "streetAddress": "street address",
+          "apartment": "Apartment, floor, etc.",
+          "phoneNumber": "phone number",
+          "city": "city",
+          "email": "email address",
+          "checkbox": "save this information for faster check-out next time"
+        },
+        "priceSection": {
+          "subtotal": "subtotal",
+          "shipping": "shipping",
+          "total": "total",
+          "payment": {
+            "bank": "bank",
+            "cash": "cash on delivery"
+          },
+          "coupon": {
+            "placeholder": "coupon code",
+            "apply": "apply coupon"
+          },
+          "order": "place order"
+        }
+      },
+      "topLevelTexts": {
+        "product": "product",
+        "price": "price",
+        "quantity": "quantity",
+        "subtotal": "subtotal"
+      },
+      "buttons": {
+        "return": "return to shop",
+        "update": "update cart",
+        "apply": "apply coupon",
+        "process": "process to checkout",
+        "applyPlaceholder": "Coupon Code"
+      },
+      "cartTotal": {
+        "title": "cart total",
+        "subtotal": "subtotal",
+        "shipping": "shipping",
+        "total": "total"
+      }
+    },
+    "contact": {
+      "infoSection": {
+        "callPart": {
+          "call": "call to us",
+          "text": "we are available 24/7, 7 days a week",
+          "phone": "Phone: +8801611112222"
+        },
+        "writePart": {
+          "write": "Write To Us",
+          "text": "Fill out our form and we will contact you within 24 hours.",
+          "emails": [
+            "Emails: customer@exclusive.com",
+            "Emails: support@exclusive.com"
+          ]
+        }
+      },
+      "form": {
+        "name": "your name*",
+        "email": "your email*",
+        "phone": "your phone*",
+        "message": "enter your message",
+        "send": "send message"
+      }
+    },
+    "registration": {
+      "login": {
+        "title": "Log in to your account",
+        "subtitle": "Enter your details below",
+        "emailOrPhone": "Email Or Phone Number",
+        "password": "password",
+        "login": "log in",
+        "forgetPassword": "Forget Password"
+      },
+      "signUp": {
+        "title": "Create an account",
+        "subtitle": "Enter your details below",
+        "inputs": {
+          "name": "name",
+          "email": "email",
+          "phoneNumber": "phone number",
+          "password": "password"
+        },
+        "createAcc": "create account",
+        "signGoogle": "sign up with google",
+        "haveAccount": "already have an account?",
+        "login": "log in"
+      }
+    },
+    "wishlist": {
+      "wishlist": "Wishlist",
+      "moveAllBag": "move all to bag",
+      "forYou": "just for you",
+      "seeAll": "see All"
+    },
+    "index": {
+      "sideMenu": {
+        "plainMenu": [
+          {
+            "href": "electronics",
+            "name": "electronics"
+          },
+          {
+            "href": "home-lifestyle",
+            "name": "home & lifestyle"
+          },
+          {
+            "href": "medicine",
+            "name": "medicine"
+          },
+          {
+            "href": "sport-outdoor",
+            "name": "sport & outdoor"
+          },
+          {
+            "href": "baby-toys",
+            "name": "baby's & toys"
+          },
+          {
+            "href": "groceries-pets",
+            "name": "groceries & pets"
+          },
+          {
+            "href": "health-beauty",
+            "name": "health & beauty"
+          }
+        ],
+        "otherMenu": [
+          {
+            "menuItems": [
+              {
+                "href": "dress",
+                "name": "dress"
+              },
+              {
+                "href": "skirt",
+                "name": "skirt"
+              },
+              {
+                "href": "blouse",
+                "name": "blouse"
+              },
+              {
+                "href": "pants",
+                "name": "pants"
+              },
+              {
+                "href": "jacket",
+                "name": "jacket"
+              },
+              {
+                "href": "coat",
+                "name": "coat"
+              },
+              {
+                "href": "sweater",
+                "name": "sweater"
+              },
+              {
+                "href": "top",
+                "name": "top"
+              },
+              {
+                "href": "jeans",
+                "name": "jeans"
+              },
+              {
+                "href": "shorts",
+                "name": "shorts"
+              },
+              {
+                "href": "scarf",
+                "name": "scarf"
+              },
+              {
+                "href": "sunglasses",
+                "name": "sunglasses"
+              },
+              {
+                "href": "hat",
+                "name": "hat"
+              },
+              {
+                "href": "heels",
+                "name": "heels"
+              },
+              {
+                "href": "flats",
+                "name": "flats"
+              },
+              {
+                "href": "boots",
+                "name": "boots"
+              },
+              {
+                "href": "sandals",
+                "name": "sandals"
+              },
+              {
+                "href": "handbag",
+                "name": "handbag"
+              },
+              {
+                "href": "clutch",
+                "name": "clutch"
+              },
+              {
+                "href": "necklace",
+                "name": "necklace"
+              }
+            ],
+            "menuName": "woman's fashion"
+          },
+          {
+            "menuItems": [
+              {
+                "href": "shirt",
+                "name": "shirt"
+              },
+              {
+                "href": "t-shirt",
+                "name": "t-shirt"
+              },
+              {
+                "href": "polo",
+                "name": "polo"
+              },
+              {
+                "href": "sweater",
+                "name": "sweater"
+              },
+              {
+                "href": "hoodie",
+                "name": "hoodie"
+              },
+              {
+                "href": "jacket",
+                "name": "jacket"
+              },
+              {
+                "href": "coat",
+                "name": "coat"
+              },
+              {
+                "href": "blazer",
+                "name": "blazer"
+              },
+              {
+                "href": "pants",
+                "name": "pants"
+              },
+              {
+                "href": "jeans",
+                "name": "jeans"
+              },
+              {
+                "href": "shorts",
+                "name": "shorts"
+              },
+              {
+                "href": "sweatpants",
+                "name": "sweatpants"
+              },
+              {
+                "href": "suits",
+                "name": "suits"
+              },
+              {
+                "href": "tie",
+                "name": "tie"
+              },
+              {
+                "href": "bowtie",
+                "name": "bowtie"
+              },
+              {
+                "href": "belt",
+                "name": "belt"
+              },
+              {
+                "href": "socks",
+                "name": "socks"
+              },
+              {
+                "href": "shoes",
+                "name": "shoes"
+              },
+              {
+                "href": "sneakers",
+                "name": "sneakers"
+              },
+              {
+                "href": "loafers",
+                "name": "loafers"
+              },
+              {
+                "href": "boots",
+                "name": "boots"
+              }
+            ],
+            "menuName": "men's fashion"
+          }
+        ]
+      },
+      "sales": {
+        "title": "today's",
+        "description": "flash sales",
+        "days": "Days",
+        "hours": "Hours",
+        "minutes": "Minutes",
+        "seconds": "Seconds",
+        "viewAll": "View all products"
+      },
+      "category": {
+        "title": "categories",
+        "description": "Browse by category",
+        "categories": [
+          {
+            "title": "phones",
+            "icon": "PhoneIcon"
+          },
+          {
+            "title": "computers",
+            "icon": "ComputerIcon"
+          },
+          {
+            "title": "smartWatch",
+            "icon": "WatchIcon"
+          },
+          {
+            "title": "camera",
+            "icon": "CameraIcon"
+          },
+          {
+            "title": "headPhones",
+            "icon": "HeadPhonesIcon"
+          },
+          {
+            "title": "gaming",
+            "icon": "GamingIcon"
+          },
+          {
+            "title": "computers",
+            "icon": "ComputerIcon"
+          },
+          {
+            "title": "smartWatch",
+            "icon": "WatchIcon"
+          },
+          {
+            "title": "headPhones",
+            "icon": "HeadPhonesIcon"
+          }
+        ]
+      },
+      "bestSelling": {
+        "title": "this month",
+        "description": "best selling products",
+        "viewAll": "view all"
+      },
+      "banner": {
+        "title": "categories",
+        "description": "enchanse your music experience",
+        "days": "Days",
+        "minutes": "Minutes",
+        "seconds": "Seconds",
+        "hours": "Hours",
+        "buy": "buy now"
+      },
+      "products": {
+        "title": "our products",
+        "description": "explore our products",
+        "viewAll": "View all products"
+      },
+      "newArrival": {
+        "title": "featured",
+        "description": "new arrival",
+        "ps5": {
+          "title": "PlayStation 5",
+          "description": "Black and White version of PS5 coming out on sale"
+        },
+        "women": {
+          "title": "Women’s Collections",
+          "description": "Featured woman collections that give you another vibe."
+        },
+        "speakers": {
+          "title": "Speakers",
+          "description": "Amazon wireless speakers"
+        },
+        "perfume": {
+          "title": "Perfume",
+          "description": "GUCCI INTENSE OUD EDP"
+        }
+      },
+      "services": [
+        {
+          "title": "FREE AND FAST DELIVERY",
+          "subtitle": "Free delivery for all orders over $140",
+          "image": "delivery.svg"
+        },
+        {
+          "title": "24/7 CUSTOMER SERVICE",
+          "subtitle": "Friendly 24/7 customer support",
+          "image": "support.svg"
+        },
+        {
+          "title": "MONEY BACK GUARANTEE",
+          "subtitle": "We reurn money within 30 days",
+          "image": "safety.svg"
+        }
+      ]
+    },
+    "notFound": {
+      "title": "404 not found",
+      "description": "Your visited page not found. You may go home page.",
+      "button": "Back to home page"
+    },
+    "loading": "Loading, please wait..."
+  },
+  "footer": {
+    "footerNav": [
+      {
+        "text": "111 Bijoy sarani, Dhaka,  DH 1515, Bangladesh.",
+        "href": "https://www.google.com/maps/search/111+Bijoy+sarani,+Dhaka,++DH+1515,+Bangladesh./@23.7643021,90.3864755,17z/data=!3m1!4b1?entry=ttu"
+      },
+      {
+        "text": "exclusive@gmail.com",
+        "href": "malito:exclusive@gmail.com"
+      },
+      {
+        "text": "+88015-88888-9999",
+        "href": "tel:+88015-88888-9999"
+      }
+    ],
+    "footerNav1": [
+      {
+        "text": "My Account",
+        "href": "account"
+      },
+      {
+        "text": "Login / Register",
+        "href": "account"
+      },
+      {
+        "text": "Cart",
+        "href": "cart"
+      },
+      {
+        "text": "Wishlist",
+        "href": "wishlist"
+      },
+      {
+        "text": "Shop",
+        "href": "shop"
+      }
+    ],
+    "footerNav2": [
+      {
+        "text": "Privacy Policy",
+        "href": "privacy-policy"
+      },
+      {
+        "text": "Terms of Use",
+        "href": "#"
+      },
+      {
+        "text": "FAQ",
+        "href": "faq"
+      },
+      {
+        "text": "Contact",
+        "href": "contact"
+      }
+    ],
+    "otherTexts": {
+      "subscribe": "subscribe",
+      "10%Off": "Get 10% off your first order",
+      "emailPlaceholder": "enter your email",
+      "downloadApp": "download App",
+      "saveNewUser": "save 3$ with App New User Only",
+      "copyRight": "Rimel 2022. All right reserved",
+      "support": "supprot",
+      "account": "account",
+      "quickLink": "quick link"
+    }
+  }
+}

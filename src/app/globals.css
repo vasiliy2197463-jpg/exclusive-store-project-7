@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+  .remove-tap-highlight {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+.home-hero-swiper {
+  margin-top: 40px;
+  margin-left: 60px;
+}
+
+@media (max-width: 1023px) {
+  .home-hero-swiper {
+    width: 100%;
+    margin: 24px 0 0;
+  }
+
+  img {
+    max-width: 100%;
+  }
+}
+
+.about-employees-swiper {
+  --swiper-navigation-color: #db4444;
+  --swiper-pagination-color: #db4444;
+  --swiper-pagination-bottom: 10px;
+  padding-inline: 20px;
+  padding-bottom: 56px !important;
+}
+
+.about-employees-swiper .swiper-slide {
+  height: auto;
+  padding-bottom: 10px;
+}
+
+@media (max-width: 639px) {
+  .about-employees-swiper {
+    padding-inline: 24px;
+  }
+
+  .about-employees-swiper .swiper-button-prev,
+  .about-employees-swiper .swiper-button-next {
+    transform: scale(0.7);
+  }
+}

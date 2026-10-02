@@ -1,0 +1,13 @@
+import { IInputWithoutLabel } from "types";
+
+export default function InputWithoutLabel({ props }: IInputWithoutLabel) {
+  return (
+    <input
+      {...props}
+      className="placeholder:text-color-text-2 px-4 py-3 bg-color-secondary rounded-sm
+      outline-color-secondary duration-300 ease-in-out transition-all w-full min-w-0
+      focus-within:outline-2 focus-within:outline-color-primary-1 text-base
+      max-2xl:text-sm"
+    />
+  );
+}
