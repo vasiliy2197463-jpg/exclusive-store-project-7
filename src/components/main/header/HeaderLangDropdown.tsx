@@ -1,40 +1,62 @@
 "use client";
-import { Select } from "@chakra-ui/react";
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
+import { FiChevronDown } from "react-icons/fi";
+import { usePathname, useRouter } from "next/navigation";
 import { ILangPropsToComponent, TLanguages } from "types";
-import { useRouter, usePathname } from "next/navigation";
+
+const languages: { value: TLanguages; label: string }[] = [
+  { value: "en", label: "English" },
+  { value: "ru", label: "Russian" },
+  { value: "tm", label: "Turkmen" },
+];
 
 export default function HeaderLangDropdown({ lang }: ILangPropsToComponent) {
   const [language, setLanguage] = useState<TLanguages>(lang);
+  const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const { push } = useRouter();
+  const router = useRouter();
+
+  useEffect(() => setLanguage(lang), [lang]);
+
+  function choose(next: TLanguages) {
+    setLanguage(next);
+    setOpen(false);
+    const rest = pathname.split("/").slice(2).filter(Boolean).join("/");
+    router.push(`/${next}${rest ? `/${rest}` : ""}`);
+  }
+
+  const selected = languages.find((item) => item.value === language) ?? languages[0];
 
   return (
-    <Select
-      value={language}
-      onChange={(e) => {
-        setLanguage(e.target.value as TLanguages);
+    <div className="relative min-w-[132px] max-sm:min-w-[108px]">
+      <button
+        type="button"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        onClick={() => setOpen((value) => !value)}
+        className="flex w-full items-center justify-between gap-3 rounded-lg bg-black px-3 py-2 text-left text-base text-white hover:bg-neutral-900 max-sm:text-xs"
+      >
+        <span>{selected.label}</span>
+        <FiChevronDown className={`shrink-0 transition-transform ${open ? "rotate-180" : ""}`} />
+      </button>
 
-        push(
-          `/${e.target.value as TLanguages}/${
-            pathname.split("/").slice(2).join("/") || ""
-          }`
-        );
-      }}
-      className="cursor-pointer !bg-color-bg-1 !text-color-text-1 max-sm:!text-xs"
-      focusBorderColor="transparent"
-      border={"none"}
-      cursor={"pointer"}
-    >
-      <option value="en" className="bg-color-bg-1 text-color-text-1">
-        English
-      </option>
-      <option value="ru" className="bg-color-bg-1 text-color-text-1">
-        Russian
-      </option>
-      <option value="tm" className="bg-color-bg-1 text-color-text-1">
-        Turkmen
-      </option>
-    </Select>
+      {open && (
+        <div role="listbox" className="absolute right-0 top-full z-[100] mt-1 w-full overflow-hidden rounded-lg border border-white/20 bg-black p-1 shadow-2xl">
+          {languages.map((item) => (
+            <button
+              key={item.value}
+              type="button"
+              role="option"
+              aria-selected={item.value === language}
+              onClick={() => choose(item.value)}
+              className={`block w-full rounded-md px-3 py-2.5 text-left text-sm transition-colors ${item.value === language ? "bg-white text-black" : "bg-black text-white hover:bg-neutral-800"}`}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
