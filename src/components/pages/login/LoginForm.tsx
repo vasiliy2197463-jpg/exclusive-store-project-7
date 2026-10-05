@@ -28,6 +28,8 @@ export default function LoginForm({ dict }: { dict: any }) {
   const router = useRouter();
 
   useEffect(() => {
+    const params = `${window.location.search}&${window.location.hash}`;
+    if (params.includes("type=recovery") || window.localStorage.getItem("exclusive-password-recovery") === "pending") setRecoveryMode(true);
     const supabase = getSupabaseBrowserClient();
     if (!supabase) return;
     const { data } = supabase.auth.onAuthStateChange((event) => {
@@ -64,7 +66,11 @@ export default function LoginForm({ dict }: { dict: any }) {
     const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
     const redirectTo = `${window.location.origin}${basePath}/${locale}/login/`;
     const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo });
-    setMessage(error ? error.message : "Письмо для восстановления отправлено. Откройте ссылку из письма в этом браузере.");
+    if (error) setMessage(error.message);
+    else {
+      window.localStorage.setItem("exclusive-password-recovery", "pending");
+      setMessage("Письмо для восстановления отправлено. Откройте ссылку из письма в этом браузере.");
+    }
     setSubmitting(false);
   }
 
@@ -80,6 +86,7 @@ export default function LoginForm({ dict }: { dict: any }) {
     const { error } = await supabase.auth.updateUser({ password: newPassword });
     if (error) setMessage(error.message);
     else {
+      window.localStorage.removeItem("exclusive-password-recovery");
       setMessage("Пароль изменён. Открываем профиль…");
       setRecoveryMode(false);
       router.push(`/${locale}/account`);
