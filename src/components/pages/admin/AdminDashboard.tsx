@@ -183,8 +183,8 @@ export default function AdminDashboard() {
     setThreads((t.data || []) as Thread[]);
     setViews((v.data || []) as PageView[]);
     const error = p.error || pc.error || o.error || c.error || t.error;
-    if (error && !String(error.message).includes("page_views"))
-      setNotice(error.message);
+    if (error) setNotice(error.message);
+    if (v.error) setNotice(`Аналитика: ${v.error.message}`);
   }, [supabase]);
 
   useEffect(() => {

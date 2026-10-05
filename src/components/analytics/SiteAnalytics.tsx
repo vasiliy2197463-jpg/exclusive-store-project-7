@@ -37,7 +37,7 @@ export default function SiteAnalytics() {
     const taggedRef = searchParams.get("ref") || searchParams.get("ref_code");
     if (taggedSource) sessionStorage.setItem("exclusive-source", taggedSource);
     if (taggedRef) sessionStorage.setItem("exclusive-ref-code", taggedRef);
-    void supabase.from("page_views").insert({
+    const payload = {
       visitor_id: visitorId,
       path: pathname,
       entry_path: sessionStorage.getItem("exclusive-entry-path") || pathname,
@@ -46,7 +46,16 @@ export default function SiteAnalytics() {
       referrer,
       device,
       platform,
-    });
+    };
+    void (async () => {
+      const { error } = await supabase.from("page_views").insert(payload);
+      if (error) {
+        console.error("Analytics page view was not recorded:", error.message);
+        localStorage.setItem("exclusive-analytics-error", error.message);
+        return;
+      }
+      localStorage.removeItem("exclusive-analytics-error");
+    })();
     if (!sessionStorage.getItem("exclusive-entry-path")) sessionStorage.setItem("exclusive-entry-path", pathname);
   }, [pathname, searchParams]);
 
