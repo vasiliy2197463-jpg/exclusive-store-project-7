@@ -47,6 +47,17 @@ export default function AccountSection({ dict }: { dict: any }) {
   const fields:[keyof Profile,string][]=[["full_name",dict.pages.account.name],["city",dict.pages.account.city],["street_address",dict.pages.account.streetAddress],["apartment",dict.pages.account.apartment],["company_name",dict.pages.account.companyName],["email",dict.pages.account.email],["phone",dict.pages.account.phoneNumber]];
   const isStaff=["support","manager","admin"].includes(profile.role);
 
+  if (!authenticated) {
+    return <section className="flex min-h-[42vh] flex-col items-start justify-center gap-6 rounded-3xl bg-neutral-50 p-6 sm:p-10">
+      <h1 className={tw("text-3xl text-color-secondary-2 max-2xl:text-2xl",interSemiboldFont.className)}>{dict.pages.account.yourProfile}</h1>
+      <p className="max-w-xl text-lg">Войдите в аккаунт или зарегистрируйтесь, чтобы открыть профиль, историю заказов и настройки.</p>
+      <div className="flex flex-wrap gap-3">
+        <Link href={`/${locale}/login`} className="rounded-full bg-color-secondary-2 px-6 py-3 font-semibold text-white">Войти в аккаунт</Link>
+        <Link href={`/${locale}/sign-up`} className="rounded-full border border-neutral-300 bg-white px-6 py-3 font-semibold">Зарегистрироваться</Link>
+      </div>
+    </section>;
+  }
+
   return <section className="flex min-w-0 flex-col items-start gap-8">
     <div className="flex w-full flex-wrap items-center justify-between gap-4"><h1 className={tw("text-3xl text-color-secondary-2 max-2xl:text-2xl",interSemiboldFont.className)}>{dict.pages.account.yourProfile}</h1><div className="flex flex-wrap gap-3">{isStaff&&<Link href={`/${locale}/admin`} className="rounded-full bg-black px-5 py-3 font-semibold text-white">Открыть админ-панель</Link>}{authenticated?<button onClick={()=>{setDraft(profile);setEditing(v=>!v)}} className="flex items-center gap-2 rounded-full border border-neutral-300 bg-white px-5 py-3 font-semibold">{editing?<FiX/>:<FiSettings/>}{editing?"Закрыть":"Редактировать"}</button>:<Link href={`/${locale}/login`} className="rounded-full bg-color-secondary-2 px-6 py-3 font-semibold text-white">Войти в аккаунт</Link>}</div></div>
     {message&&<p className={`rounded-xl px-4 py-3 text-sm ${message==="Профиль сохранён"?"bg-green-100":"bg-amber-100"}`}>{message}</p>}

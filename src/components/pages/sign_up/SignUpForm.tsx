@@ -39,7 +39,7 @@ export default function SignUpForm({ dict }: IDict) {
         setSubmitting(false);
         return;
       }
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -48,10 +48,12 @@ export default function SignUpForm({ dict }: IDict) {
         },
       });
       if (error) {
-        setMessage(error.message);
+        setMessage(error.message.toLowerCase().includes("already registered") ? "Этот email уже зарегистрирован. Перейдите ко входу или восстановите пароль." : error.message);
+      } else if (data.session) {
+        setMessage("Аккаунт создан. Выполняется вход…");
+        router.push(`/${locale}/account`);
       } else {
         setMessage("Аккаунт создан. Проверьте почту для подтверждения.");
-        router.push(`/${locale}/account`);
       }
       setSubmitting(false);
     },
@@ -103,6 +105,7 @@ export default function SignUpForm({ dict }: IDict) {
             value: formik.values.password,
             onChange: formik.handleChange,
             id: "password",
+            minLength: 8,
           }}
         />
       </div>
