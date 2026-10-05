@@ -1,9 +1,8 @@
-import PrimaryButton from "@/components/buttons/PrimaryButton";
+import BannerButton from "@/components/buttons/BannerButton";
 import SecondaryTimeCalc from "@/components/time_calculating/SecondaryTimeCalc";
 import SectionDescription from "@/components/titles/SectionDescription";
 import SectionTitle from "@/components/titles/SectionTitle";
 import Image from "next/image";
-import Link from "next/link";
 import { TLanguages } from "@/shared/types";
 
 export default async function AloneBannerSection({
@@ -28,11 +27,11 @@ export default async function AloneBannerSection({
           className="text-color-text-1 text-6xl leading-[70px] max-w-xl max-3xl:text-5xl max-3xl:leading-[60px] max-2xl:max-w-md max-lg:text-4xl max-lg:leading-tight max-sm:text-3xl"
         />
         <SecondaryTimeCalc date={salesUntil} dict={dict} />
-        <Link href={`/${locale}/product/amazon-echo-speaker`}>
-          <PrimaryButton className="bg-color-button hover:bg-color-button-hover">
-            {dict.pages.index.banner.buy}
-          </PrimaryButton>
-        </Link>
+        <BannerButton
+          href={`/${locale}/product/amazon-echo-speaker`}
+          text={dict.pages.index.banner.buy}
+          className="rounded-md bg-color-button px-7 py-4 hover:bg-color-button-hover"
+        />
       </div>
       <Image
         alt="banner-image"

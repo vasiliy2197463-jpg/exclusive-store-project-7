@@ -21,6 +21,7 @@ type Tab =
   | "promos"
   | "orders"
   | "customers"
+  | "reviews"
   | "support";
 type Product = {
   id: number;
@@ -67,6 +68,17 @@ type Customer = {
   created_at: string;
 };
 type Thread = { id: string; status: string; last_message_at: string };
+type Review = {
+  id: number;
+  product_slug: string;
+  product_name: string;
+  author_name: string;
+  rating: number;
+  body: string;
+  status: "pending" | "published" | "rejected";
+  admin_reply: string;
+  created_at: string;
+};
 type PageView = {
   id: number;
   visitor_id: string;
@@ -136,6 +148,7 @@ export default function AdminDashboard() {
     [orders, setOrders] = useState<Order[]>([]),
     [customers, setCustomers] = useState<Customer[]>([]),
     [threads, setThreads] = useState<Thread[]>([]),
+    [reviews, setReviews] = useState<Review[]>([]),
     [views, setViews] = useState<PageView[]>([]);
   const [form, setForm] = useState<ProductForm>(blank),
     [editing, setEditing] = useState<Product | null>(null),
@@ -143,6 +156,7 @@ export default function AdminDashboard() {
   const [stockDraft, setStockDraft] = useState<Record<number, number>>({}),
     [promoDraft, setPromoDraft] = useState<Record<string, boolean>>({});
   const [refCode, setRefCode] = useState("partner-01");
+  const [reviewDraft, setReviewDraft] = useState<Record<number, { status: Review["status"]; admin_reply: string }>>({});
   const [visitorPeriod, setVisitorPeriod] =
     useState<VisitorPeriod>("today");
   const [visitorDevice, setVisitorDevice] = useState("all");
@@ -152,7 +166,7 @@ export default function AdminDashboard() {
 
   const load = useCallback(async () => {
     if (!supabase) return;
-    const [p, pc, o, c, t, v] = await Promise.all([
+    const [p, pc, o, c, t, r, v] = await Promise.all([
       supabase
         .from("products")
         .select("*")
@@ -171,6 +185,10 @@ export default function AdminDashboard() {
         .select("id,status,last_message_at")
         .order("last_message_at", { ascending: false }),
       supabase
+        .from("product_reviews")
+        .select("*")
+        .order("created_at", { ascending: false }),
+      supabase
         .from("page_views")
         .select("*")
         .order("created_at", { ascending: false })
@@ -181,9 +199,11 @@ export default function AdminDashboard() {
     setOrders((o.data || []) as Order[]);
     setCustomers((c.data || []) as Customer[]);
     setThreads((t.data || []) as Thread[]);
+    setReviews((r.data || []) as Review[]);
     setViews((v.data || []) as PageView[]);
     const error = p.error || pc.error || o.error || c.error || t.error;
     if (error) setNotice(error.message);
+    if (r.error && !String(r.error.message).includes("product_reviews")) setNotice(r.error.message);
     if (v.error) setNotice(`Аналитика: ${v.error.message}`);
   }, [supabase]);
 
@@ -487,6 +507,31 @@ export default function AdminDashboard() {
     if (error) setNotice(error.message);
     else await load();
   }
+  async function saveReview(item: Review) {
+    if (!supabase) return;
+    const draft = reviewDraft[item.id] || { status: item.status, admin_reply: item.admin_reply || "" };
+    setSaving(true);
+    const { error } = await supabase
+      .from("product_reviews")
+      .update({
+        status: draft.status,
+        admin_reply: draft.admin_reply.trim(),
+        replied_at: draft.admin_reply.trim() ? new Date().toISOString() : null,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", item.id);
+    setSaving(false);
+    if (error) setNotice(error.message);
+    else {
+      setReviewDraft((current) => {
+        const next = { ...current };
+        delete next[item.id];
+        return next;
+      });
+      setNotice("Отзыв сохранён");
+      await load();
+    }
+  }
   async function signOut() {
     await supabase?.auth.signOut();
     router.push(`/${locale}/login`);
@@ -519,6 +564,7 @@ export default function AdminDashboard() {
     ["promos", "Промокоды"],
     ["orders", "Заказы"],
     ["customers", "Клиенты"],
+    ["reviews", `Отзывы (${reviews.filter((item) => item.status === "pending").length})`],
     ["support", "Поддержка"],
   ];
   const empty = (text: string) => (
@@ -1211,6 +1257,57 @@ export default function AdminDashboard() {
               </div>
             ) : (
               empty("Клиентов пока нет")
+            ))}
+          {tab === "reviews" &&
+            (reviews.length ? (
+              <div className="grid gap-4">
+                {reviews.map((item) => {
+                  const draft = reviewDraft[item.id] || {
+                    status: item.status,
+                    admin_reply: item.admin_reply || "",
+                  };
+                  const changed = draft.status !== item.status || draft.admin_reply !== (item.admin_reply || "");
+                  return (
+                    <article key={item.id} className="rounded-3xl bg-white p-5 shadow-sm sm:p-7">
+                      <div className="flex flex-wrap justify-between gap-4">
+                        <div className="min-w-0">
+                          <p className="text-sm text-neutral-500">{item.product_name}</p>
+                          <h3 className="mt-1 break-words text-xl font-black">{item.author_name}</h3>
+                          <p className="mt-1 text-amber-500">{"★".repeat(item.rating)}{"☆".repeat(5 - item.rating)}</p>
+                        </div>
+                        <p className="text-sm text-neutral-500">{new Date(item.created_at).toLocaleString("ru-RU")}</p>
+                      </div>
+                      <p className="mt-4 whitespace-pre-wrap break-words leading-7">{item.body}</p>
+                      <div className="mt-5 grid gap-3 md:grid-cols-[220px_minmax(0,1fr)]">
+                        <select
+                          value={draft.status}
+                          onChange={(event) => setReviewDraft((current) => ({ ...current, [item.id]: { ...draft, status: event.target.value as Review["status"] } }))}
+                          className="rounded-xl border bg-white px-4 py-3"
+                        >
+                          <option value="pending">На модерации</option>
+                          <option value="published">Опубликовать</option>
+                          <option value="rejected">Скрыть</option>
+                        </select>
+                        <textarea
+                          value={draft.admin_reply}
+                          onChange={(event) => setReviewDraft((current) => ({ ...current, [item.id]: { ...draft, admin_reply: event.target.value } }))}
+                          placeholder="Ответ магазина покупателю"
+                          className="min-h-24 rounded-xl border p-4"
+                        />
+                      </div>
+                      <button
+                        disabled={!changed || saving}
+                        onClick={() => saveReview(item)}
+                        className="mt-3 rounded-xl bg-black px-6 py-3 font-bold text-white disabled:cursor-not-allowed disabled:bg-neutral-200 disabled:text-neutral-500"
+                      >
+                        Сохранить
+                      </button>
+                    </article>
+                  );
+                })}
+              </div>
+            ) : (
+              empty("Отзывы пока не поступали")
             ))}
           {tab === "support" &&
             (threads.length ? (
