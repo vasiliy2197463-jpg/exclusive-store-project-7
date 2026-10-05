@@ -12,8 +12,9 @@ import { ICartProductCard, IDict } from "@/shared/types";
 import { calculateDeliveryPrice, calculateSubtotal } from "@/shared/utils";
 import { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import { TLanguages } from "@/shared/types";
 
-export default function CartProductsSection({ dict }: IDict) {
+export default function CartProductsSection({ dict, lang }: IDict & { lang: TLanguages }) {
   const cartProducts = useRecoilValue(cartProductsState);
   const [array, setArray] = useState<ICartProductCard[]>([]);
   const setSubTotal = useSetRecoilState(subTotalPriceState);
@@ -68,7 +69,7 @@ export default function CartProductsSection({ dict }: IDict) {
           </div>
         </>
       ) : (
-        <DefaultText text="Nothing to show" className="text-center text-4xl" />
+        <DefaultText text={lang === "ru" ? "Корзина пуста" : lang === "tm" ? "Sebet boş" : "Cart is empty"} className="text-center text-4xl" />
       )}
     </section>
   );

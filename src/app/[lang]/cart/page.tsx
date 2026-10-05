@@ -23,7 +23,7 @@ export default async function page({ params }: { params: { lang: TLanguages } })
       )}
     >
       <NavigationTrain />
-      <CartProductsSection dict={dict} />
+      <CartProductsSection dict={dict} lang={locale} />
       <CartTotalSection dict={dict} lang={locale} />
     </div>
   );
