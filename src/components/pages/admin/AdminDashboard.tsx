@@ -79,6 +79,7 @@ type PageView = {
   platform: string;
   created_at: string;
 };
+type VisitorPeriod = "today" | "yesterday" | "earlier" | "mine";
 
 const blank: ProductForm = {
   name: "",
@@ -142,6 +143,12 @@ export default function AdminDashboard() {
   const [stockDraft, setStockDraft] = useState<Record<number, number>>({}),
     [promoDraft, setPromoDraft] = useState<Record<string, boolean>>({});
   const [refCode, setRefCode] = useState("partner-01");
+  const [visitorPeriod, setVisitorPeriod] =
+    useState<VisitorPeriod>("today");
+  const [visitorDevice, setVisitorDevice] = useState("all");
+  const [expandedVisitorId, setExpandedVisitorId] = useState("");
+  const [ownerVisitorId, setOwnerVisitorId] = useState("");
+  const [analyticsNow, setAnalyticsNow] = useState(() => Date.now());
 
   const load = useCallback(async () => {
     if (!supabase) return;
@@ -213,6 +220,16 @@ export default function AdminDashboard() {
     const timer = window.setTimeout(() => setNotice(""), 5000);
     return () => window.clearTimeout(timer);
   }, [notice]);
+  useEffect(() => {
+    setOwnerVisitorId(
+      window.localStorage.getItem("exclusive-visitor-id") || "",
+    );
+    const timer = window.setInterval(
+      () => setAnalyticsNow(Date.now()),
+      60_000,
+    );
+    return () => window.clearInterval(timer);
+  }, []);
 
   const visible = products.filter(
     (p) => !p.archived && p.name.toLowerCase().includes(query.toLowerCase()),
@@ -222,16 +239,39 @@ export default function AdminDashboard() {
       .filter((p) => !p.archived)
       .sort((a, b) => Number(a.stock) - Number(b.stock));
   const stats = useMemo(
-    () => ({
-      products: products.filter((p) => !p.archived).length,
-      stock: products
-        .filter((p) => !p.archived)
-        .reduce((s, p) => s + Number(p.stock || 0), 0),
-      orders: orders.length,
-      newOrders: orders.filter((o) => o.status === "new").length,
-      customers: customers.filter((c) => c.role === "customer").length,
-      support: threads.filter((t) => t.status !== "closed").length,
-    }),
+    () => {
+      const liveProducts = products.filter((p) => !p.archived);
+      const paidOrders = orders.filter(
+        (o) => !["cancelled", "refunded"].includes(o.status),
+      );
+      const deliveredOrders = orders.filter((o) => o.status === "delivered");
+      const revenue = paidOrders.reduce((sum, o) => sum + Number(o.total || 0), 0);
+      return {
+        products: liveProducts.length,
+        stock: liveProducts.reduce((s, p) => s + Number(p.stock || 0), 0),
+        stockValue: liveProducts.reduce(
+          (s, p) => s + Number(p.stock || 0) * Number(p.price || 0),
+          0,
+        ),
+        orders: orders.length,
+        newOrders: orders.filter((o) => o.status === "new").length,
+        processingOrders: orders.filter((o) =>
+          ["confirmed", "processing", "shipped"].includes(o.status),
+        ).length,
+        deliveredOrders: deliveredOrders.length,
+        cancelledOrders: orders.filter((o) =>
+          ["cancelled", "refunded"].includes(o.status),
+        ).length,
+        revenue,
+        completedRevenue: deliveredOrders.reduce(
+          (sum, o) => sum + Number(o.total || 0),
+          0,
+        ),
+        averageOrder: paidOrders.length ? revenue / paidOrders.length : 0,
+        customers: customers.filter((c) => c.role === "customer").length,
+        support: threads.filter((t) => t.status !== "closed").length,
+      };
+    },
     [products, orders, customers, threads],
   );
   const analytics = useMemo(() => {
@@ -268,6 +308,82 @@ export default function AdminDashboard() {
       pages: count("path"),
     };
   }, [views]);
+  const visitorAnalytics = useMemo(() => {
+    const today = new Date(analyticsNow);
+    today.setHours(0, 0, 0, 0);
+    const todayAt = today.getTime();
+    const yesterdayAt = todayAt - 86_400_000;
+    const isMine = (v: PageView) =>
+      Boolean(ownerVisitorId && v.visitor_id === ownerVisitorId);
+    const publicViews = views.filter((v) => !isMine(v));
+    const todayViews = publicViews.filter(
+      (v) => new Date(v.created_at).getTime() >= todayAt,
+    );
+    const yesterdayViews = publicViews.filter((v) => {
+      const created = new Date(v.created_at).getTime();
+      return created >= yesterdayAt && created < todayAt;
+    });
+    const earlierViews = publicViews.filter(
+      (v) => new Date(v.created_at).getTime() < yesterdayAt,
+    );
+    const mineViews = views.filter(isMine);
+    const periodViews =
+      visitorPeriod === "today"
+        ? todayViews
+        : visitorPeriod === "yesterday"
+          ? yesterdayViews
+          : visitorPeriod === "earlier"
+            ? earlierViews
+            : mineViews;
+    const filteredViews = periodViews.filter((v) => {
+      if (visitorDevice === "all") return true;
+      if (visitorDevice === "phone")
+        return ["mobile", "phone", "tablet"].includes(
+          String(v.device).toLowerCase(),
+        );
+      return String(v.device).toLowerCase() === visitorDevice;
+    });
+    const groups = Array.from(
+      filteredViews.reduce((map, view) => {
+        const current = map.get(view.visitor_id) || [];
+        current.push(view);
+        map.set(view.visitor_id, current);
+        return map;
+      }, new Map<string, PageView[]>()),
+    )
+      .map(([visitorId, visitorViews]) => ({
+        visitorId,
+        visits: visitorViews.sort(
+          (a, b) =>
+            new Date(b.created_at).getTime() -
+            new Date(a.created_at).getTime(),
+        ),
+      }))
+      .sort(
+        (a, b) =>
+          new Date(b.visits[0].created_at).getTime() -
+          new Date(a.visits[0].created_at).getTime(),
+      );
+    const lastByVisitor = new Map<string, number>();
+    publicViews.forEach((v) => {
+      const created = new Date(v.created_at).getTime();
+      lastByVisitor.set(
+        v.visitor_id,
+        Math.max(lastByVisitor.get(v.visitor_id) || 0, created),
+      );
+    });
+    return {
+      online: Array.from(lastByVisitor.values()).filter(
+        (created) => analyticsNow - created < 5 * 60_000,
+      ).length,
+      uniqueToday: new Set(todayViews.map((v) => v.visitor_id)).size,
+      todayViews,
+      yesterdayViews,
+      earlierViews,
+      mineViews,
+      groups,
+    };
+  }, [analyticsNow, ownerVisitorId, views, visitorDevice, visitorPeriod]);
   const payload = (v: ProductForm) => ({
     name: v.name.trim(),
     slug: slugify(v.slug || v.name),
@@ -595,45 +711,147 @@ export default function AdminDashboard() {
             </div>
           )}
           {tab === "overview" && (
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {[
-                ["Товаров", stats.products],
-                ["Остаток, шт.", stats.stock],
-                ["Заказов", stats.orders],
-                ["Новых заказов", stats.newOrders],
-                ["Клиентов", stats.customers],
-                ["Обращений", stats.support],
-              ].map(([l, v]) => (
-                <article
-                  key={l}
-                  className="min-w-0 rounded-2xl bg-white p-6 shadow-sm"
-                >
-                  <p className="break-words text-sm text-neutral-500">{l}</p>
-                  <p className="mt-2 text-4xl font-bold">{v}</p>
-                </article>
-              ))}
+            <div className="space-y-6">
+              <div className="grid gap-4 md:grid-cols-2">
+                {[
+                  ["Товаров", stats.products],
+                  ["Остаток, шт.", stats.stock],
+                  ["Заказов", stats.orders],
+                  ["Новых заказов", stats.newOrders],
+                  ["Оборот", `${stats.revenue.toLocaleString("ru-RU")} ₽`],
+                  ["Средний чек", `${Math.round(stats.averageOrder).toLocaleString("ru-RU")} ₽`],
+                  ["Завершённый оборот", `${stats.completedRevenue.toLocaleString("ru-RU")} ₽`],
+                  ["Клиентов", stats.customers],
+                  ["Стоимость запасов", `${stats.stockValue.toLocaleString("ru-RU")} ₽`],
+                  ["Открытых обращений", stats.support],
+                ].map(([label, value]) => (
+                  <article
+                    key={String(label)}
+                    className="min-w-0 rounded-3xl bg-white p-6 shadow-sm sm:p-8"
+                  >
+                    <p className="break-words text-neutral-500">{label}</p>
+                    <p className="mt-3 break-words text-3xl font-black sm:text-4xl">
+                      {value}
+                    </p>
+                  </article>
+                ))}
+              </div>
+              <section className="rounded-3xl bg-white p-5 shadow-sm sm:p-7">
+                <div className="flex flex-wrap items-center justify-between gap-4">
+                  <div>
+                    <h3 className="text-xl font-black uppercase">Состояние заказов</h3>
+                    <p className="mt-1 text-sm text-neutral-500">
+                      Актуальная сводка магазина Exclusive
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setTab("orders")}
+                    className="rounded-full border px-5 py-2.5 font-semibold"
+                  >
+                    Открыть заказы
+                  </button>
+                </div>
+                <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                  {[
+                    ["Новые", stats.newOrders, "bg-lime-300"],
+                    ["В работе", stats.processingOrders, "bg-blue-100"],
+                    ["Завершённые", stats.deliveredOrders, "bg-emerald-100"],
+                    ["Отменённые", stats.cancelledOrders, "bg-red-100"],
+                  ].map(([label, value, color]) => (
+                    <article
+                      key={String(label)}
+                      className={`rounded-3xl p-5 sm:p-6 ${color}`}
+                    >
+                      <p className="text-neutral-600">{label}</p>
+                      <p className="mt-2 text-4xl font-black">{value}</p>
+                    </article>
+                  ))}
+                </div>
+              </section>
             </div>
           )}
           {tab === "analytics" && (
             <div className="space-y-5">
-              <div className="grid gap-4 sm:grid-cols-2">
-                <article className="rounded-2xl bg-white p-6 shadow-sm">
-                  <p className="text-sm text-neutral-500">Просмотров</p>
-                  <p className="mt-2 text-4xl font-bold">{views.length}</p>
-                </article>
-                <article className="rounded-2xl bg-white p-6 shadow-sm">
-                  <p className="text-sm text-neutral-500">
-                    Уникальных посетителей
-                  </p>
-                  <p className="mt-2 text-4xl font-bold">{analytics.unique}</p>
-                </article>
-              </div>
-              <section className="rounded-2xl bg-white p-5 shadow-sm">
-                <h3 className="text-lg font-bold">Отдельные ссылки для соцсетей</h3>
-                <p className="mt-1 text-sm text-neutral-500">
-                  Каждая кнопка копирует отдельную отслеживаемую ссылку. Переходы будут показаны по площадкам.
+              <div>
+                <h3 className="text-3xl font-black uppercase tracking-tight sm:text-5xl">
+                  Посетители
+                </h3>
+                <p className="mt-2 text-neutral-500">
+                  Посещения, рекламные источники, страницы перехода и UTM-метки.
                 </p>
-                <div className="mt-4 grid gap-3 sm:grid-cols-3">
+              </div>
+              <div className="grid gap-4 sm:grid-cols-3">
+                {[
+                  ["Сейчас на сайте", visitorAnalytics.online],
+                  ["Уникальных сегодня", visitorAnalytics.uniqueToday],
+                  ["Просмотров сегодня", visitorAnalytics.todayViews.length],
+                ].map(([label, value]) => (
+                  <article
+                    key={String(label)}
+                    className="rounded-3xl bg-white p-6 shadow-sm"
+                  >
+                    <p className="text-sm text-neutral-500">{label}</p>
+                    <p className="mt-4 text-4xl font-black">{value}</p>
+                  </article>
+                ))}
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {(
+                  [
+                    ["today", "Сегодня", visitorAnalytics.todayViews],
+                    ["yesterday", "Вчера", visitorAnalytics.yesterdayViews],
+                    ["earlier", "Ранее", visitorAnalytics.earlierViews],
+                    ["mine", "Мои посещения", visitorAnalytics.mineViews],
+                  ] as [VisitorPeriod, string, PageView[]][]
+                ).map(([id, label, periodViews]) => {
+                  const active = visitorPeriod === id;
+                  return (
+                    <button
+                      key={String(id)}
+                      onClick={() => {
+                        setVisitorPeriod(id as VisitorPeriod);
+                        setExpandedVisitorId("");
+                      }}
+                      className={`rounded-3xl border p-6 text-left transition ${active ? "border-black bg-black text-white" : "border-neutral-200 bg-white hover:border-black"}`}
+                    >
+                      <p className={active ? "text-white/60" : "text-neutral-500"}>
+                        {label}
+                      </p>
+                      <p className="mt-3 text-2xl font-black">
+                        {new Set(periodViews.map((v) => v.visitor_id)).size}{" "}
+                        посетителей
+                      </p>
+                      <p className={active ? "text-white/60" : "text-neutral-400"}>
+                        {periodViews.length} просмотров
+                      </p>
+                    </button>
+                  );
+                })}
+              </div>
+              <section className="rounded-3xl bg-white p-5 shadow-sm">
+                <label className="font-bold" htmlFor="visitor-device">
+                  Показать устройство
+                </label>
+                <p className="text-sm text-neutral-500">
+                  Ваши визиты не входят в общую статистику.
+                </p>
+                <select
+                  id="visitor-device"
+                  value={visitorDevice}
+                  onChange={(e) => setVisitorDevice(e.target.value)}
+                  className="mt-4 w-full rounded-full border bg-white px-5 py-3 font-semibold"
+                >
+                  <option value="all">Все посетители</option>
+                  <option value="desktop">Компьютеры</option>
+                  <option value="phone">Телефоны и планшеты</option>
+                </select>
+              </section>
+              <details className="group rounded-3xl bg-white p-5 shadow-sm">
+                <summary className="cursor-pointer list-none text-lg font-bold">
+                  <span className="mr-2 inline-block transition group-open:rotate-90">▶</span>
+                  Ссылки для рекламы
+                </summary>
+                <div className="mt-5 grid gap-3 sm:grid-cols-3">
                   <button onClick={() => copyReferral("instagram", "instagram-main")} className="flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-fuchsia-600 to-orange-500 px-4 py-4 font-semibold text-white">
                     <AiOutlineInstagram className="h-7 w-7" /> Instagram
                   </button>
@@ -644,14 +862,7 @@ export default function AdminDashboard() {
                     <FaVk className="h-7 w-7" /> ВКонтакте
                   </button>
                 </div>
-              </section>
-              <section className="rounded-2xl bg-white p-5 shadow-sm">
-                <h3 className="text-lg font-bold">Своя реферальная ссылка</h3>
-                <p className="mt-1 text-sm text-neutral-500">
-                  Создайте код и отправьте ссылку. Переходы появятся ниже в
-                  разделе «Реферальные коды».
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
+                <div className="mt-4 flex flex-col gap-2 sm:flex-row">
                   <input
                     value={refCode}
                     onChange={(e) => setRefCode(slugify(e.target.value))}
@@ -662,13 +873,69 @@ export default function AdminDashboard() {
                     onClick={() => copyReferral("referral", refCode || "partner-01")}
                     className="rounded-xl bg-black px-5 py-3 text-white"
                   >
-                    Скопировать ссылку
+                    Скопировать свою ссылку
                   </button>
                 </div>
-              </section>
+              </details>
               {views.length ? (
                 <>
-                  <div className="grid gap-4 md:grid-cols-2">
+                  <section className="space-y-3">
+                    <h3 className="text-xl font-black">Посетители и действия</h3>
+                    {visitorAnalytics.groups.length ? (
+                      visitorAnalytics.groups.map(({ visitorId, visits }) => {
+                        const opened = expandedVisitorId === visitorId;
+                        const latest = visits[0];
+                        const sources = Array.from(
+                          new Set(visits.map((v) => v.source || "direct")),
+                        ).join(", ");
+                        return (
+                          <article key={visitorId} className="overflow-hidden rounded-3xl bg-white shadow-sm">
+                            <button
+                              onClick={() => setExpandedVisitorId(opened ? "" : visitorId)}
+                              className="flex w-full flex-wrap items-center justify-between gap-4 p-5 text-left"
+                            >
+                              <div className="min-w-0">
+                                <p className="font-black">Гость {visitorId.slice(0, 8)}</p>
+                                <p className="break-words text-sm text-neutral-500">
+                                  {sources} · {latest.device} · {latest.platform}
+                                </p>
+                              </div>
+                              <div className="text-right">
+                                <p className="font-bold">{visits.length} действий</p>
+                                <p className="text-sm text-neutral-500">
+                                  {new Date(latest.created_at).toLocaleString("ru-RU")}
+                                </p>
+                              </div>
+                            </button>
+                            {opened && (
+                              <div className="border-t bg-neutral-50 p-4 sm:p-5">
+                                <div className="space-y-2">
+                                  {visits.map((visit) => (
+                                    <div key={visit.id} className="grid gap-1 rounded-2xl bg-white p-4 sm:grid-cols-[150px_minmax(0,1fr)_180px] sm:gap-4">
+                                      <span className="text-sm text-neutral-500">
+                                        {new Date(visit.created_at).toLocaleString("ru-RU")}
+                                      </span>
+                                      <span className="min-w-0 break-all font-medium">{visit.path}</span>
+                                      <span className="break-all text-sm">
+                                        {visit.source || "direct"}{visit.ref_code ? ` / ${visit.ref_code}` : ""}
+                                      </span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                          </article>
+                        );
+                      })
+                    ) : (
+                      empty("В выбранном периоде посещений пока нет")
+                    )}
+                  </section>
+                  <details className="rounded-3xl bg-white p-5 shadow-sm">
+                    <summary className="cursor-pointer text-lg font-bold">
+                      Сводная статистика
+                    </summary>
+                    <div className="mt-5 grid gap-4 md:grid-cols-2">
                     {[
                       ["Источники трафика", analytics.sources],
                       ["Реферальные коды", analytics.refs],
@@ -702,41 +969,8 @@ export default function AdminDashboard() {
                         </div>
                       </section>
                     ))}
-                  </div>
-                  <section className="overflow-x-auto rounded-2xl bg-white p-5 shadow-sm">
-                    <h3 className="mb-4 text-lg font-bold">
-                      Последние действия посетителей
-                    </h3>
-                    <table className="min-w-[760px] w-full text-left text-sm">
-                      <thead>
-                        <tr className="border-b">
-                          <th className="p-2">Когда</th>
-                          <th className="p-2">Источник / код</th>
-                          <th className="p-2">Страница</th>
-                          <th className="p-2">Вход</th>
-                          <th className="p-2">Устройство</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {views.slice(0, 100).map((v) => (
-                          <tr key={v.id} className="border-b">
-                            <td className="p-2 whitespace-nowrap">
-                              {new Date(v.created_at).toLocaleString("ru-RU")}
-                            </td>
-                            <td className="p-2 break-all">
-                              {v.source}
-                              {v.ref_code ? ` / ${v.ref_code}` : ""}
-                            </td>
-                            <td className="p-2 break-all">{v.path}</td>
-                            <td className="p-2 break-all">{v.entry_path}</td>
-                            <td className="p-2">
-                              {v.device} · {v.platform}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </section>
+                    </div>
+                  </details>
                 </>
               ) : (
                 empty(
