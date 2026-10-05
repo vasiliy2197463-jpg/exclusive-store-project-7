@@ -25,8 +25,7 @@ export default function BannerButton({ text, href = "#", className }: IBannerBut
     if (product && !cart.some((item) => item.name === product.name)) {
       setCart(addNewItemToCart({ amount: 1, cartProducts: cart, isFavorite: false, props: product }));
     }
-    const locale = href.split("/").filter(Boolean)[0] || "ru";
-    router.push(product ? `/${locale}/cart` : href);
+    router.push(href);
   }
 
   return (
