@@ -23,19 +23,71 @@ export default function LoginForm({ dict }: { dict: any }) {
   const [message, setMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [recoveryMode, setRecoveryMode] = useState(false);
+  const [checkingRecovery, setCheckingRecovery] = useState(false);
   const [newPassword, setNewPassword] = useState("");
   const locale = usePathname().split("/")[1] || "ru";
   const router = useRouter();
 
   useEffect(() => {
-    const params = `${window.location.search}&${window.location.hash}`;
-    if (params.includes("type=recovery") || window.localStorage.getItem("exclusive-password-recovery") === "pending") setRecoveryMode(true);
     const supabase = getSupabaseBrowserClient();
     if (!supabase) return;
-    const { data } = supabase.auth.onAuthStateChange((event) => {
-      if (event === "PASSWORD_RECOVERY") setRecoveryMode(true);
+    const auth = supabase.auth;
+
+    let active = true;
+    const pending = window.localStorage.getItem("exclusive-password-recovery") === "pending";
+    const hash = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+    const search = new URLSearchParams(window.location.search);
+    const isRecoveryLink = hash.get("type") === "recovery" || search.get("type") === "recovery" || pending;
+
+    async function prepareRecoverySession() {
+      if (!isRecoveryLink) return;
+      setCheckingRecovery(true);
+      setMessage("Проверяем ссылку восстановления…");
+
+      let session = (await auth.getSession()).data.session;
+      const accessToken = hash.get("access_token");
+      const refreshToken = hash.get("refresh_token");
+      const code = search.get("code");
+
+      if (!session && accessToken && refreshToken) {
+        const result = await auth.setSession({
+          access_token: accessToken,
+          refresh_token: refreshToken,
+        });
+        session = result.data.session;
+      }
+
+      if (!session && code) {
+        const result = await auth.exchangeCodeForSession(code);
+        session = result.data.session;
+      }
+
+      if (!active) return;
+      setCheckingRecovery(false);
+      if (session) {
+        setRecoveryMode(true);
+        setMessage("");
+        window.history.replaceState({}, document.title, window.location.pathname);
+      } else {
+        setRecoveryMode(false);
+        window.localStorage.removeItem("exclusive-password-recovery");
+        setMessage("Ссылка восстановления недействительна или устарела. Запросите новое письмо.");
+      }
+    }
+
+    void prepareRecoverySession();
+
+    const { data } = auth.onAuthStateChange((event, session) => {
+      if (event === "PASSWORD_RECOVERY" && session) {
+        setCheckingRecovery(false);
+        setRecoveryMode(true);
+        setMessage("");
+      }
     });
-    return () => data.subscription.unsubscribe();
+    return () => {
+      active = false;
+      data.subscription.unsubscribe();
+    };
   }, []);
 
   async function submit(event: FormEvent) {
@@ -92,6 +144,10 @@ export default function LoginForm({ dict }: { dict: any }) {
       router.push(`/${locale}/account`);
     }
     setSubmitting(false);
+  }
+
+  if (checkingRecovery) {
+    return <p className="text-lg" role="status">Проверяем ссылку восстановления…</p>;
   }
 
   if (recoveryMode) {
