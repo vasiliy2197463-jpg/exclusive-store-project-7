@@ -4,6 +4,7 @@ import TopHeader from "@/components/main/header/TopHeader";
 import { IChildren } from "@/shared/types";
 import { TLanguages } from "@/shared/types";
 import { getDict } from "@/dictionaries/dictionaries";
+import SiteAnalytics from "@/components/analytics/SiteAnalytics";
 
 export function generateStaticParams() {
   return [{ lang: "en" }, { lang: "ru" }, { lang: "tm" }];
@@ -13,6 +14,7 @@ export default async function layout({ children, params }: IChildren & { params:
   const dict = await getDict(params.lang);
   return (
     <>
+      <SiteAnalytics />
       <header>
         <TopHeader locale={params.lang} dict={dict} />
         <MainHeader locale={params.lang} dict={dict} />
