@@ -29,20 +29,20 @@ export default function HeaderLangDropdown({ lang }: ILangPropsToComponent) {
   const selected = languages.find((item) => item.value === language) ?? languages[0];
 
   return (
-    <div className="relative min-w-[132px] max-sm:min-w-[108px]">
+    <div className="relative min-w-[132px] max-sm:min-w-[104px]">
       <button
         type="button"
         aria-haspopup="listbox"
         aria-expanded={open}
         onClick={() => setOpen((value) => !value)}
-        className="flex w-full items-center justify-between gap-3 rounded-lg bg-black px-3 py-2 text-left text-base text-white hover:bg-neutral-900 max-sm:text-xs"
+        className="flex w-full items-center justify-between gap-2 rounded-lg border border-neutral-200 bg-white px-3 py-2 text-left text-sm text-black hover:bg-neutral-50 max-sm:text-xs"
       >
         <span>{selected.label}</span>
         <FiChevronDown className={`shrink-0 transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
 
       {open && (
-        <div role="listbox" className="absolute right-0 top-full z-[300] mt-1 w-40 overflow-hidden rounded-lg border border-white/20 bg-black p-1 shadow-2xl max-sm:fixed max-sm:left-4 max-sm:right-4 max-sm:top-16 max-sm:w-auto">
+        <div role="listbox" className="absolute right-0 top-full z-[300] mt-1 w-40 overflow-hidden rounded-lg border border-neutral-200 bg-white p-1 shadow-2xl">
           {languages.map((item) => (
             <button
               key={item.value}
@@ -50,7 +50,7 @@ export default function HeaderLangDropdown({ lang }: ILangPropsToComponent) {
               role="option"
               aria-selected={item.value === language}
               onClick={() => choose(item.value)}
-              className={`block w-full rounded-md px-3 py-2.5 text-left text-sm transition-colors ${item.value === language ? "bg-white text-black" : "bg-black text-white hover:bg-neutral-800"}`}
+              className={`block w-full rounded-md px-3 py-2.5 text-left text-sm transition-colors ${item.value === language ? "bg-black text-white" : "bg-white text-black hover:bg-neutral-100"}`}
             >
               {item.label}
             </button>

@@ -135,6 +135,7 @@ export interface IProductSwiper {
   swiperProps: SwiperProps;
   data: IProductCard[];
   itemsCentered?: boolean;
+  syncWithCatalog?: boolean;
 }
 
 // ! time type
