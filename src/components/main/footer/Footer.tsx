@@ -73,7 +73,7 @@ export default function Footer({ locale, dict }: { locale: TLanguages; dict: any
             >
               {qrText}
             </p>
-            <div className="flex gap-2 items-center"><SiteQrCode /></div>
+            <div className="flex gap-2 items-center"><SiteQrCode locale={locale} /></div>
             <div className="flex items-center gap-6 pt-4">
               <a href={instagramUrl} target="_blank" rel="noreferrer" aria-label="Instagram">
                 <InstagramIcon className="w-7 h-7 object-contain max-2xl:w-6 max-2xl:h-6" />

@@ -3,10 +3,16 @@
 import { useEffect, useState } from "react";
 import { QRCodeCanvas } from "qrcode.react";
 
-export default function SiteQrCode() {
-  const [url, setUrl] = useState("https://example.com");
+export default function SiteQrCode({ locale }: { locale: string }) {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+  const [url, setUrl] = useState(`https://vasiliy2197463-jpg.github.io/exclusive-store-project-7/${locale}/`);
 
-  useEffect(() => setUrl(window.location.origin), []);
+  useEffect(() => {
+    const publicBase = window.location.hostname === "vasiliy2197463-jpg.github.io"
+      ? "https://vasiliy2197463-jpg.github.io/exclusive-store-project-7"
+      : `${window.location.origin}${basePath}`;
+    setUrl(`${publicBase}/${locale}/`);
+  }, [basePath, locale]);
 
   return (
     <div className="rounded-lg bg-white p-2" title={url}>
@@ -16,7 +22,7 @@ export default function SiteQrCode() {
         level="H"
         marginSize={1}
         imageSettings={{
-          src: "/images/about/luchik-kuzya-vitalik-shopping.png",
+          src: `${basePath}/images/about/luchik-kuzya-vitalik-shopping.png`,
           width: 28,
           height: 28,
           excavate: true,
