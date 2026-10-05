@@ -31,12 +31,11 @@ export default async function Home({ params }: { params: { lang: TLanguages } })
       <SalesSection salesUntil={new Date("12-30-2023")} locale={params.lang} dict={dict} />
       <CategoriesSection dict={dict} />
       <BestSellingSection dict={dict} />
-      <AloneBannerSection salesUntil={new Date("12-10-2023")} dict={dict} />
+      <AloneBannerSection salesUntil={new Date("12-10-2023")} locale={params.lang} dict={dict} />
       <ProductsSection dict={dict} />
       <NewArrivalSection locale={params.lang} dict={dict} />
       <ServicesSection dict={dict} />
     </div>
   );
 }
-
 

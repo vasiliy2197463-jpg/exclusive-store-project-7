@@ -26,7 +26,7 @@ export default function WishListSection({ dict }: IDict) {
           </h1>
           <OutlinedButton>{dict.pages.wishlist.moveAllBag}</OutlinedButton>
         </div>
-        <div className="grid grid-cols-5 auto-cols-auto gap-10 max-2xl:grid-cols-4 max-2xl:gap-12">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 2xl:gap-10">
           {array.map((item, i) => (
             <ProductCard key={i} {...item} />
           ))}
@@ -40,7 +40,7 @@ export default function WishListSection({ dict }: IDict) {
           />
           <OutlinedButton>{dict.pages.wishlist.seeAll}</OutlinedButton>
         </div>
-        <div className="grid grid-cols-5 auto-cols-auto gap-10 max-2xl:grid-cols-4">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 2xl:gap-10">
           {relatedProducts.map((item, i) => (
             <ProductCard key={i} {...item} />
           ))}

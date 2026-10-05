@@ -18,6 +18,7 @@ export default function NewArrivalSection({ locale, dict }: { locale: TLanguages
         >
           <BannerContent
             locale={locale}
+            href={`/${locale}/product/playstation-5`}
             description={dict.pages.index.newArrival.ps5.description}
             title={dict.pages.index.newArrival.ps5.title}
           />
@@ -29,6 +30,7 @@ export default function NewArrivalSection({ locale, dict }: { locale: TLanguages
         >
           <BannerContent
             locale={locale}
+            href={`/${locale}/product/gucci-duffle-bag`}
             description={dict.pages.index.newArrival.women.description}
             title={dict.pages.index.newArrival.women.title}
           />
@@ -43,6 +45,7 @@ export default function NewArrivalSection({ locale, dict }: { locale: TLanguages
           />
           <BannerContent
             locale={locale}
+            href={`/${locale}/product/amazon-echo-speaker`}
             description={dict.pages.index.newArrival.speakers.description}
             title={dict.pages.index.newArrival.speakers.title}
             className="absolute bottom-0 left-0 p-10"
@@ -58,6 +61,7 @@ export default function NewArrivalSection({ locale, dict }: { locale: TLanguages
           />
           <BannerContent
             locale={locale}
+            href={`/${locale}/product/luxury-intense-perfume`}
             description={dict.pages.index.newArrival.perfume.description}
             title={dict.pages.index.newArrival.perfume.title}
             className="absolute bottom-0 left-0 p-10"

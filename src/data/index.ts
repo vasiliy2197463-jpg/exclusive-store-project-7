@@ -12,7 +12,7 @@ export const homeBanners = [
 // ! home page > sales > swiper
 export const homeSalesSwiper: IProductCard[] = [
   {
-    images: ["gamepad-red.webp"],
+    images: ["gamepad-red.webp", "gamepad-red-back.png"],
     name: "HAVIT HV-G92 Gamepad",
     price: 160,
     rating: [1, 1, 1, 1, 1],
@@ -88,7 +88,7 @@ export const homeBestSellingSwiper: IProductCard[] = [
     discount: 27,
   },
   {
-    images: ["bag.webp"],
+    images: ["bag.webp", "bag-side.png"],
     name: "gucci duffle bag",
     price: 1160,
     rating: [1, 1, 1, 1, 0.5],
@@ -137,6 +137,30 @@ export const homeBestSellingSwiper: IProductCard[] = [
 
 // ! home page > products > swiper
 export const homeProductsSwiper: IProductCard[] = [
+  {
+    images: ["ps5.webp"],
+    name: "PlayStation 5",
+    price: 499,
+    rating: [1, 1, 1, 1, 1],
+    ratingAmount: 128,
+    colors: ["white", "black"],
+    isNew: true,
+  },
+  {
+    images: ["speakers.webp"],
+    name: "Amazon Echo Speaker",
+    price: 120,
+    rating: [1, 1, 1, 1, 0.5],
+    ratingAmount: 84,
+    colors: ["black", "#1c93b8"],
+  },
+  {
+    images: ["perfume.webp"],
+    name: "Luxury Intense Perfume",
+    price: 140,
+    rating: [1, 1, 1, 1, 1],
+    ratingAmount: 73,
+  },
   {
     images: ["dog-food.webp"],
     name: "Breed Dry Dog Food",
@@ -191,7 +215,7 @@ export const homeProductsSwiper: IProductCard[] = [
     colors: ["black", "purple"],
   },
   {
-    images: ["jacket.webp"],
+    images: ["jacket.webp", "jacket-back.png"],
     name: "Quilted Satin Jacket",
     price: 160,
     rating: [1, 1, 1, 1, 0.5],
@@ -241,7 +265,7 @@ export const homeProductsSwiper: IProductCard[] = [
 // ! related products in wishlist && product[id] page
 export const relatedProducts: IProductCard[] = [
   {
-    images: ["gamepad-red.webp"],
+    images: ["gamepad-red.webp", "gamepad-red-back.png"],
     name: "HAVIT HV-G92 Gamepad",
     price: 160,
     rating: [1, 1, 1, 1, 1],
@@ -256,7 +280,7 @@ export const relatedProducts: IProductCard[] = [
     ratingAmount: 95,
   },
   {
-    images: ["jacket.webp"],
+    images: ["jacket.webp", "jacket-back.png"],
     name: "Quilted Satin Jacket",
     price: 160,
     rating: [1, 1, 1, 1, 0.5],

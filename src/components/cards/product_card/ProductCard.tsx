@@ -25,6 +25,15 @@ import {
   increaseAmount,
   removeItemFromCartViaIndex,
 } from "@/shared/utils";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+const slugifyProduct = (value: string) =>
+  value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9а-яё]+/gi, "-")
+    .replace(/^-|-$/g, "");
 
 export default function ProductCard(props: IProductCard) {
   const { images, name, price, rating, ratingAmount, colors, discount, isNew } =
@@ -36,6 +45,8 @@ export default function ProductCard(props: IProductCard) {
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [amount, setAmount] = useState(0);
   const [cartProducts, setCartProducts] = useRecoilState(cartProductsState);
+  const locale = usePathname().split("/")[1] || "ru";
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
   useEffect(() => {
     favoriteProducts.length > 0 &&
@@ -108,14 +119,20 @@ export default function ProductCard(props: IProductCard) {
 
   return (
     <div className="group flex w-full min-w-0 flex-col items-start gap-3">
-      <div className="relative flex aspect-square w-full min-w-0 items-center justify-center overflow-hidden bg-color-secondary p-8 max-sm:p-5">
-        <Image
-          alt={name}
-          src={`/images/products/${images[0]}`}
-          width={200}
-          height={200}
-          className="h-[65%] w-[65%] object-contain"
-        />
+      <div className="relative flex aspect-square w-full min-w-0 items-center justify-center overflow-hidden bg-color-secondary p-8 max-sm:p-4">
+        <Link
+          href={`/${locale}/product/${slugifyProduct(name)}`}
+          aria-label={`Открыть товар ${name}`}
+          className="flex h-full w-full items-center justify-center"
+        >
+          <Image
+            alt={name}
+            src={`${basePath}/images/products/${images[0]}`}
+            width={240}
+            height={240}
+            className="h-[72%] w-[72%] object-contain transition-transform duration-300 group-hover:scale-105"
+          />
+        </Link>
 
         <>
           {amount !== 0 ? (
@@ -157,7 +174,7 @@ export default function ProductCard(props: IProductCard) {
         <>
           <div
             onClick={handleFavoriteClick}
-            className="w-10 h-10 absolute top-2 right-3 cursor-pointer bg-color-bg rounded-full flex items-center justify-center"
+            className="absolute right-2 top-2 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-color-bg sm:right-3 sm:h-10 sm:w-10"
           >
             <>
               {isFavorite ? (
@@ -186,9 +203,12 @@ export default function ProductCard(props: IProductCard) {
       <div
         className={`${poppinsMediumFont.className} grid min-w-0 w-full grid-rows-[auto_auto_auto] items-start gap-2`}
       >
-        <p className="line-clamp-2 min-h-12 max-w-full break-words text-lg leading-6 text-color-text-3 capitalize max-2xl:text-base max-2xl:leading-5">
+        <Link
+          href={`/${locale}/product/${slugifyProduct(name)}`}
+          className="line-clamp-2 min-h-10 max-w-full break-words text-base leading-5 text-color-text-3 capitalize hover:underline sm:min-h-12 sm:text-lg sm:leading-6"
+        >
           {name}
-        </p>
+        </Link>
         <div className="flex min-h-7 flex-wrap items-center gap-x-2 gap-y-1">
             <p className="text-color-secondary-2 text-lg max-2xl:text-base">
               ${discount ? `${price - (price / 100) * discount}` : price}

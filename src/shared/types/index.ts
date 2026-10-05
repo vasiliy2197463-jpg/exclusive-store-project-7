@@ -57,6 +57,7 @@ export interface IPrimaryButton extends IChildren, IClassName {
 // ! banner button
 export interface IBannerButton {
   text: string;
+  href?: string;
 }
 
 // ! service card
@@ -110,6 +111,7 @@ export interface IArrowButton extends IClassName {
 export interface IBannerContent extends IClassName {
   title: string;
   description: string;
+  href?: string;
 }
 
 // ! main divider

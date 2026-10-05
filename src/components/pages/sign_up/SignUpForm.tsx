@@ -61,6 +61,22 @@ export default function SignUpForm({ dict }: IDict) {
 
   const locale = usePathname().split("/")[1];
 
+  async function signUpWithGoogle() {
+    const supabase = getSupabaseBrowserClient();
+    if (!supabase) {
+      setMessage("Supabase ещё не подключён");
+      return;
+    }
+    setMessage("");
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `https://vasiliy2197463-jpg.github.io/exclusive-store-project-7/${locale}/account/`,
+      },
+    });
+    if (error) setMessage(error.message);
+  }
+
   return (
     <form
       className="flex min-w-0 flex-col gap-14 max-2xl:gap-8 max-sm:gap-6"
@@ -75,6 +91,9 @@ export default function SignUpForm({ dict }: IDict) {
             value: formik.values.firstName,
             onChange: formik.handleChange,
             id: "firstName",
+            name: "firstName",
+            autoComplete: "name",
+            enterKeyHint: "next",
           }}
         />
         <InputWithLine
@@ -85,16 +104,24 @@ export default function SignUpForm({ dict }: IDict) {
             value: formik.values.email,
             onChange: formik.handleChange,
             id: "email",
+            name: "email",
+            autoComplete: "email",
+            inputMode: "email",
+            enterKeyHint: "next",
           }}
         />
         <InputWithLine
           props={{
-            type: "text",
+            type: "tel",
             placeholder: dict.pages.registration.signUp.inputs.phoneNumber,
             required: true,
             value: formik.values.phoneNumber,
             onChange: formik.handleChange,
             id: "phoneNumber",
+            name: "phoneNumber",
+            autoComplete: "tel",
+            inputMode: "tel",
+            enterKeyHint: "next",
           }}
         />
         <InputWithLine
@@ -105,6 +132,9 @@ export default function SignUpForm({ dict }: IDict) {
             value: formik.values.password,
             onChange: formik.handleChange,
             id: "password",
+            name: "password",
+            autoComplete: "new-password",
+            enterKeyHint: "done",
             minLength: 8,
           }}
         />
@@ -118,7 +148,10 @@ export default function SignUpForm({ dict }: IDict) {
         >
           {submitting ? "Создаём аккаунт…" : dict.pages.registration.signUp.createAcc}
         </PrimaryButton>
-        <OutlinedButton className="flex min-w-0 items-center justify-center gap-5 px-5">
+        <OutlinedButton
+          buttonProps={{ type: "button", onClick: signUpWithGoogle }}
+          className="flex min-w-0 items-center justify-center gap-5 px-5"
+        >
           <Image
             alt=""
             src={"/icons/sign_up/google.svg"}

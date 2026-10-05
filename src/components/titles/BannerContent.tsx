@@ -9,6 +9,7 @@ export default async function BannerContent({
   title,
   className,
   locale,
+  href,
 }: IBannerContent & { locale: TLanguages }) {
   return (
     <div className={tw("space-y-4", className)}>
@@ -24,6 +25,7 @@ export default async function BannerContent({
         <p className="text-base max-2xl:text-sm">{description}</p>
       </div>
       <BannerButton
+        href={href}
         text={
           locale === "en"
             ? "shop now"

@@ -1,3 +1,5 @@
+"use client";
+
 import { horizontalMarginLimit } from "@/shared/constants";
 import { twMerge as tw } from "tailwind-merge";
 import { interBoldFont } from "fonts";
@@ -6,8 +8,15 @@ import HeaderInputButtons from "./HeaderInputButtons";
 import Link from "next/link";
 import { TLanguages } from "@/shared/types";
 import HeaderLangDropdown from "./HeaderLangDropdown";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { FiMenu, FiX } from "react-icons/fi";
 
 export default function MainHeader({ locale, dict }: { locale: TLanguages; dict: any }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => setMenuOpen(false), [pathname]);
 
   return (
     <div className="bg-color-bg text-color-text-3 border-b border-color-divider">
@@ -24,10 +33,15 @@ export default function MainHeader({ locale, dict }: { locale: TLanguages; dict:
           >
             Exclusive
           </Link>
-          <div className="relative z-[90] lg:hidden"><HeaderLangDropdown lang={locale} /></div>
+          <div className="flex items-center gap-2 lg:hidden">
+            <div className="relative z-[90]"><HeaderLangDropdown lang={locale} /></div>
+            <button type="button" onClick={() => setMenuOpen(true)} aria-label="Открыть меню" className="flex h-10 w-10 items-center justify-center rounded-lg border">
+              <FiMenu className="h-6 w-6" />
+            </button>
+          </div>
         </div>
         <div className="flex items-center gap-52 max-3xl:gap-40 max-2xl:gap-24 max-lg:w-full max-lg:flex-col max-lg:items-stretch max-lg:gap-4">
-          <nav className="flex items-center gap-12 max-3xl:gap-10 max-2xl:gap-8 max-lg:order-2 max-lg:gap-6 max-lg:overflow-x-auto max-lg:pb-2 max-sm:grid max-sm:grid-cols-2 max-sm:gap-x-6 max-sm:gap-y-3 max-sm:overflow-visible">
+          <nav className="flex items-center gap-12 max-3xl:gap-10 max-2xl:gap-8 max-lg:hidden">
             {dict.header.links.map((item: any, i: number) => (
               <HeaderLink {...item} key={i} />
             ))}
@@ -40,6 +54,31 @@ export default function MainHeader({ locale, dict }: { locale: TLanguages; dict:
           </div>
         </div>
       </div>
+      {menuOpen && (
+        <div className="fixed inset-0 z-[500] lg:hidden">
+          <button aria-label="Закрыть меню" onClick={() => setMenuOpen(false)} className="absolute inset-0 bg-black/50" />
+          <aside className="absolute right-0 top-0 flex h-full w-[86%] max-w-sm flex-col overflow-y-auto bg-white p-6 shadow-2xl">
+            <div className="flex items-center justify-between border-b pb-5">
+              <span className={tw("text-2xl", interBoldFont.className)}>Exclusive</span>
+              <button onClick={() => setMenuOpen(false)} aria-label="Закрыть меню" className="flex h-10 w-10 items-center justify-center rounded-full border"><FiX className="h-6 w-6" /></button>
+            </div>
+            <nav className="mt-6 flex flex-col gap-1">
+              {dict.header.links.map((item: any, i: number) => (
+                <div key={i} className="border-b py-3"><HeaderLink {...item} /></div>
+              ))}
+              {[
+                ["Магазин", "shop"],
+                ["Избранное", "wishlist"],
+                ["Корзина", "cart"],
+                ["Аккаунт", "account"],
+                ["Частые вопросы", "faq"],
+              ].map(([label, href]) => (
+                <Link key={href} href={`/${locale}/${href}`} className="border-b py-3 text-sm font-medium">{label}</Link>
+              ))}
+            </nav>
+          </aside>
+        </div>
+      )}
     </div>
   );
 }
