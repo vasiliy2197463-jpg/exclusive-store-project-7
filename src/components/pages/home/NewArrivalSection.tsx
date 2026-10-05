@@ -5,7 +5,6 @@ import { TLanguages } from "@/shared/types";
 import Image from "next/image";
 
 export default function NewArrivalSection({ locale, dict }: { locale: TLanguages; dict: any }) {
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
   return (
     <section className="felx flex-col space-y-10 max-2xl:space-y-8">
       <div className="space-y-7">
@@ -14,7 +13,7 @@ export default function NewArrivalSection({ locale, dict }: { locale: TLanguages
       </div>
       <div className="grid grid-cols-4 grid-rows-2 h-[600px] gap-10 max-2xl:h-[500px] max-lg:grid-cols-2 max-lg:grid-rows-none max-lg:h-auto max-lg:gap-5 max-sm:grid-cols-1">
         <div
-          style={{ backgroundImage: `url(${basePath}/images/home/ps5.webp)` }}
+          style={{ backgroundImage: "url(/images/home/ps5.webp)" }}
           className="col-span-2 row-span-2 bg-color-bg-1 bg-no-repeat bg-contain bg-bottom flex min-h-[480px] items-end p-10 rounded-sm max-sm:col-span-1 max-sm:min-h-[420px] max-sm:p-6"
         >
           <BannerContent
@@ -24,7 +23,7 @@ export default function NewArrivalSection({ locale, dict }: { locale: TLanguages
           />
         </div>
         <div
-          style={{ backgroundImage: `url(${basePath}/images/home/alice-fashion.png)` }}
+          style={{ backgroundImage: "url(/images/home/alice-fashion.png)" }}
           className="col-span-2 min-h-[260px] flex items-end p-10 rounded-sm bg-color-bg-1 bg-no-repeat bg-contain bg-right max-sm:col-span-1 max-sm:p-6
         shadow-[inset_-100px_0_100px_10px_rgba(255,255,255,0.2)]"
         >

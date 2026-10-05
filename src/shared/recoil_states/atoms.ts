@@ -7,6 +7,16 @@ import {
 } from "../types";
 import { calculateDeliveryPrice, calculateSubtotal } from "../utils";
 
+function readArray<T>(key: string): T[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const value = JSON.parse(localStorage.getItem(key) || "[]");
+    return Array.isArray(value) ? value : [];
+  } catch {
+    return [];
+  }
+}
+
 // ! favorites
 export const favoriteProductsState = atom<IProductCard[]>({
   key: "FavoriteProducts",
@@ -17,17 +27,7 @@ export const favoriteProductsState = atom<IProductCard[]>({
         localStorage.setItem("favorite-products", JSON.stringify(param));
       });
       setSelf(() => {
-        let returnValue: IProductCard[];
-
-        if (typeof window !== "undefined" && localStorage) {
-          returnValue =
-            localStorage.getItem("favorite-products") !== null
-              ? JSON.parse(localStorage.getItem("favorite-products") as string)
-              : [];
-        } else {
-          returnValue = [];
-        }
-        return returnValue;
+        return readArray<IProductCard>("favorite-products");
       });
     },
   ],
@@ -43,17 +43,7 @@ export const cartProductsState = atom<ICartProductCard[]>({
         localStorage.setItem("cart-products", JSON.stringify(param));
       });
       setSelf(() => {
-        let returnValue: ICartProductCard[];
-
-        if (typeof window !== "undefined" && localStorage) {
-          returnValue =
-            localStorage.getItem("cart-products") !== null
-              ? JSON.parse(localStorage.getItem("cart-products") as string)
-              : [];
-        } else {
-          returnValue = [];
-        }
-        return returnValue;
+        return readArray<ICartProductCard>("cart-products");
       });
     },
   ],
@@ -66,14 +56,7 @@ export const subTotalPriceState = atom<number>({
   effects: [
     ({ setSelf }) => {
       setSelf((state) => {
-        let cartArray: ICartProductCard[] = [];
-
-        if (typeof window !== "undefined" && localStorage) {
-          cartArray =
-            localStorage.getItem("cart-products") &&
-            JSON.parse(localStorage.getItem("cart-products") as string);
-        }
-
+        const cartArray = readArray<ICartProductCard>("cart-products");
         return calculateSubtotal(cartArray, state as number);
       });
     },
@@ -87,14 +70,7 @@ export const deliveryPriceState = atom<number>({
   effects: [
     ({ setSelf }) => {
       setSelf((state) => {
-        let cartArray: ICartProductCard[] = [];
-
-        if (typeof window !== "undefined" && localStorage) {
-          cartArray =
-            localStorage.getItem("cart-products") &&
-            JSON.parse(localStorage.getItem("cart-products") as string);
-        }
-
+        const cartArray = readArray<ICartProductCard>("cart-products");
         return calculateDeliveryPrice(cartArray, state as number);
       });
     },

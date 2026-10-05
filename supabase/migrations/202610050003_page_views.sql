@@ -4,11 +4,14 @@ create table if not exists public.page_views (
   path text not null,
   entry_path text not null default '',
   source text not null default 'direct',
+  ref_code text not null default '',
   referrer text not null default '',
   device text not null default 'desktop',
   platform text not null default 'unknown',
   created_at timestamptz not null default now()
 );
+
+alter table public.page_views add column if not exists ref_code text not null default '';
 
 alter table public.page_views enable row level security;
 drop policy if exists "anyone records page views" on public.page_views;
@@ -18,5 +21,6 @@ create policy "staff reads page views" on public.page_views for select using (pu
 create index if not exists page_views_created_idx on public.page_views(created_at desc);
 create index if not exists page_views_visitor_idx on public.page_views(visitor_id);
 create index if not exists page_views_source_idx on public.page_views(source);
+create index if not exists page_views_ref_code_idx on public.page_views(ref_code);
 
 select 'analytics_ready' as status;

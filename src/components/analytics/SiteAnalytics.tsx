@@ -33,11 +33,16 @@ export default function SiteAnalytics() {
     const device = /tablet|ipad/i.test(ua) ? "tablet" : /mobile|iphone|android/i.test(ua) ? "mobile" : "desktop";
     const platform = (navigator as Navigator & { userAgentData?: { platform?: string } }).userAgentData?.platform || navigator.platform || "unknown";
     const referrer = document.referrer || "";
+    const taggedSource = searchParams.get("utm_source");
+    const taggedRef = searchParams.get("ref") || searchParams.get("ref_code");
+    if (taggedSource) sessionStorage.setItem("exclusive-source", taggedSource);
+    if (taggedRef) sessionStorage.setItem("exclusive-ref-code", taggedRef);
     void supabase.from("page_views").insert({
       visitor_id: visitorId,
       path: pathname,
       entry_path: sessionStorage.getItem("exclusive-entry-path") || pathname,
-      source: sourceFrom(referrer, searchParams.get("utm_source")),
+      source: sourceFrom(referrer, taggedSource || sessionStorage.getItem("exclusive-source")),
+      ref_code: taggedRef || sessionStorage.getItem("exclusive-ref-code") || "",
       referrer,
       device,
       platform,
