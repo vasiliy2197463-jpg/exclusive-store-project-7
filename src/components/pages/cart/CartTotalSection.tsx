@@ -43,7 +43,7 @@ export default function CartTotalSection({
         const { images, name, price, discount, amount } = item;
         let calculatedPrice = 0;
         if (discount) {
-          calculatedPrice = amount * (price * (discount / 100));
+          calculatedPrice = amount * (price * (1 - discount / 100));
         } else {
           calculatedPrice = amount * price;
         }
@@ -53,19 +53,19 @@ export default function CartTotalSection({
   }
 
   return (
-    <section className="flex justify-between items-start">
-      <div className="flex items-center gap-6">
+    <section className="flex items-start justify-between gap-8 max-lg:flex-col">
+      <div className="flex items-center gap-6 max-sm:w-full max-sm:flex-col max-sm:items-stretch max-sm:gap-3">
         <input
           type="text"
           placeholder={dict.pages.cart.buttons.applyPlaceholder}
           className="p-4 w-80 rounded-sm border-color-bg-1 border duration-300 transition-colors focus-within:outline-color-bg-1 text-base
-          max-3xl:p-3 max-2xl:text-sm"
+          max-3xl:p-3 max-2xl:text-sm max-sm:w-full"
         />
-        <PrimaryButton>{dict.pages.cart.buttons.apply}</PrimaryButton>
+        <PrimaryButton className="max-sm:w-full">{dict.pages.cart.buttons.apply}</PrimaryButton>
       </div>
       <div
         className="flex flex-col px-10 py-12 rounded-sm border-2 border-color-bg-1 w-[550px] gap-7
-      max-3xl:py-10 max-2xl:w-[440px] max-2xl:gap-5 max-2xl:border"
+      max-3xl:py-10 max-2xl:w-[440px] max-2xl:gap-5 max-2xl:border max-lg:w-full max-sm:px-5 max-sm:py-6"
       >
         <h3
           className={tw(

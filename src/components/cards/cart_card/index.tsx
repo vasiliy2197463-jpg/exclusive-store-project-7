@@ -61,7 +61,7 @@ export default function CartCard(props: ICartProductCard) {
 
   function discountCkecing() {
     if (discount) {
-      return price * (discount / 100);
+      return price * (1 - discount / 100);
     } else {
       return price;
     }
@@ -69,10 +69,9 @@ export default function CartCard(props: ICartProductCard) {
 
   return (
     <div
-      className="grid grid-cols-4 shadow-[0px_0px_20px_1px_rgba(25,25,25,0.1)] px-6 py-7 content-center place-content-center gap-3
-    max-2xl:py-5 max-2xl:px-4"
+      className="grid grid-cols-4 gap-3 px-6 py-7 shadow-[0px_0px_20px_1px_rgba(25,25,25,0.1)] max-2xl:px-4 max-2xl:py-5 max-sm:grid-cols-[minmax(0,1fr)_auto] max-sm:gap-4 max-sm:p-4"
     >
-      <div className="flex items-center gap-5 pl-10">
+      <div className="flex min-w-0 items-center gap-4 pl-10 max-sm:col-span-2 max-sm:pl-2">
         <div className="relative">
           <Image
             alt={name}
@@ -90,13 +89,13 @@ export default function CartCard(props: ICartProductCard) {
             <CrossIcon className="text-color-text-1 w-5 h-5" />
           </div>
         </div>
-        <DefaultText text={name} />
+        <DefaultText text={name} className="min-w-0 break-words text-base leading-5" />
       </div>
       <>
         {discount ? (
-          <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-col items-center justify-center max-sm:items-start">
             <DefaultText
-              text={`$${price * (discount / 100)}`}
+              text={`$${(price * (1 - discount / 100)).toFixed(2)}`}
               className="text-color-secondary-2"
             />
             <DefaultText
@@ -107,11 +106,11 @@ export default function CartCard(props: ICartProductCard) {
         ) : (
           <DefaultText
             text={`$${discountCkecing()}`}
-            className="text-center self-center"
+            className="text-center self-center max-sm:justify-self-start"
           />
         )}
       </>
-      <div className="text-center flex items-center justify-center gap-2">
+      <div className="text-center flex items-center justify-center gap-2 max-sm:justify-self-end">
         <p className="text-base max-2xl:text-sm">{amount}</p>
         <div className="flex flex-col">
           <UpArrowIcon
@@ -124,8 +123,8 @@ export default function CartCard(props: ICartProductCard) {
           />
         </div>
       </div>
-      <div className="remove-tap-highlight selection:bg-transparent text-center self-center">
-        <DefaultText text={`$${discountCkecing() * amount}`} />
+      <div className="remove-tap-highlight selection:bg-transparent text-center self-center max-sm:col-span-2 max-sm:w-full max-sm:border-t max-sm:pt-3 max-sm:text-right">
+        <DefaultText text={`$${(discountCkecing() * amount).toFixed(2)}`} />
       </div>
     </div>
   );

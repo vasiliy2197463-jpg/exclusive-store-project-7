@@ -181,7 +181,7 @@ export default function TotalSection({ dict }: IDict) {
             {dict.pages.cart.checkOut.priceSection.payment.cash}
           </Radio>
         </RadioGroup>
-        <div className="flex gap-5">
+        <div className="flex gap-5 max-sm:flex-col max-sm:gap-3">
           <input
             type="text"
             value={couponCode}
@@ -190,9 +190,9 @@ export default function TotalSection({ dict }: IDict) {
               dict.pages.cart.checkOut.priceSection.coupon.placeholder
             }
             className="p-4 w-80 text-base rounded-sm border-color-bg-1 border duration-300 transition-colors focus-within:outline-color-bg-1
-            max-3xl:p-3 max-2xl:text-sm"
+            max-3xl:p-3 max-2xl:text-sm max-sm:w-full"
           />
-          <PrimaryButton buttonProps={{ type: "button", onClick: applyCoupon }}>
+          <PrimaryButton className="max-sm:w-full" buttonProps={{ type: "button", onClick: applyCoupon }}>
             {dict.pages.cart.checkOut.priceSection.coupon.apply}
           </PrimaryButton>
         </div>

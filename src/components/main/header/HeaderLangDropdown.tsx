@@ -42,7 +42,7 @@ export default function HeaderLangDropdown({ lang }: ILangPropsToComponent) {
       </button>
 
       {open && (
-        <div role="listbox" className="absolute right-0 top-full z-[100] mt-1 w-full overflow-hidden rounded-lg border border-white/20 bg-black p-1 shadow-2xl">
+        <div role="listbox" className="absolute right-0 top-full z-[300] mt-1 w-40 overflow-hidden rounded-lg border border-white/20 bg-black p-1 shadow-2xl max-sm:fixed max-sm:left-4 max-sm:right-4 max-sm:top-16 max-sm:w-auto">
           {languages.map((item) => (
             <button
               key={item.value}

@@ -32,7 +32,7 @@ export default function CartProductsSection({ dict }: IDict) {
         <>
           <div
             className="grid grid-cols-4 shadow-[0px_0px_10px_1px_rgba(25,25,25,0.1)] px-6 py-7 gap-3
-          max-2xl:py-5 max-2xl:px-4"
+          max-2xl:py-5 max-2xl:px-4 max-sm:hidden"
           >
             <DefaultText
               text={dict.pages.cart.topLevelTexts.product}
@@ -56,7 +56,7 @@ export default function CartProductsSection({ dict }: IDict) {
               <CartCard key={i} {...item} />
             ))}
           </div>
-          <div className="flex items-center justify-between">
+          <div className="grid grid-cols-2 gap-3 max-sm:[&>button]:min-w-0 max-sm:[&>button]:px-3">
             <OutlinedButton
               buttonProps={{
                 onClick: () => console.log("hello"),

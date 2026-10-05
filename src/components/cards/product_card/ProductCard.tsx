@@ -108,13 +108,13 @@ export default function ProductCard(props: IProductCard) {
 
   return (
     <div className="group flex w-full min-w-0 flex-col items-start gap-3">
-      <div className="relative flex w-full min-w-0 items-center justify-center bg-color-secondary p-12 px-10 max-sm:px-5">
+      <div className="relative flex aspect-square w-full min-w-0 items-center justify-center overflow-hidden bg-color-secondary p-8 max-sm:p-5">
         <Image
           alt={name}
           src={`/images/products/${images[0]}`}
           width={200}
           height={200}
-          className="w-36 h-36 object-contain max-2xl:w-28 max-2xl:h-28"
+          className="h-[65%] w-[65%] object-contain"
         />
 
         <>
@@ -186,10 +186,10 @@ export default function ProductCard(props: IProductCard) {
       <div
         className={`${poppinsMediumFont.className} grid min-w-0 w-full grid-rows-[auto_auto_auto] items-start gap-2`}
       >
-        <p className="line-clamp-1 min-h-7 max-w-full text-lg text-color-text-3 capitalize max-2xl:min-h-6 max-2xl:text-base">
+        <p className="line-clamp-2 min-h-12 max-w-full break-words text-lg leading-6 text-color-text-3 capitalize max-2xl:text-base max-2xl:leading-5">
           {name}
         </p>
-        <div className="flex min-h-7 flex-wrap items-center gap-2">
+        <div className="flex min-h-7 flex-wrap items-center gap-x-2 gap-y-1">
             <p className="text-color-secondary-2 text-lg max-2xl:text-base">
               ${discount ? `${price - (price / 100) * discount}` : price}
             </p>

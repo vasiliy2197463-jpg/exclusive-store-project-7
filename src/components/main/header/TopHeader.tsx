@@ -1,17 +1,24 @@
+"use client";
+
 import { horizontalMarginLimit } from "@/shared/constants";
 import Link from "next/link";
 import { twMerge as tw } from "tailwind-merge";
 import { poppinsSemiBoldFont } from "fonts";
 import HeaderLangDropdown from "./HeaderLangDropdown";
 import { TLanguages } from "@/shared/types";
+import { useState } from "react";
+import { FiX } from "react-icons/fi";
 
 export default function TopHeader({ locale, dict }: { locale: TLanguages; dict: any }) {
+  const [visible, setVisible] = useState(true);
+
+  if (!visible) return null;
 
   return (
-    <div className="bg-color-bg-1 text-color-text-1">
+    <div className="relative z-[80] bg-color-bg-1 text-color-text-1">
       <div
         className={tw(
-          `flex items-center justify-center relative py-3 max-lg:justify-between max-lg:gap-4`,
+          `relative flex items-center justify-center py-3 pr-10 max-lg:justify-between max-lg:gap-3 max-sm:items-start max-sm:py-2`,
           horizontalMarginLimit
         )}
       >
@@ -29,9 +36,10 @@ export default function TopHeader({ locale, dict }: { locale: TLanguages; dict: 
             </Link>
           </p>
         </div>
-        <div className="absolute right-0 top-2/4 w-36 -translate-y-2/4 max-lg:static max-lg:w-28 max-lg:shrink-0 max-lg:translate-y-0 max-sm:w-24">
+        <div className="absolute right-10 top-2/4 w-36 -translate-y-2/4 max-lg:static max-lg:w-28 max-lg:shrink-0 max-lg:translate-y-0 max-sm:w-24">
           <HeaderLangDropdown lang={locale} />
         </div>
+        <button type="button" aria-label="Скрыть акцию" onClick={()=>setVisible(false)} className="absolute right-0 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full text-white/80 hover:bg-white/15 hover:text-white"><FiX className="h-5 w-5"/></button>
       </div>
     </div>
   );

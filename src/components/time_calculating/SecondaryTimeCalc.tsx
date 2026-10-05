@@ -26,10 +26,10 @@ export default function SecondaryTimeCalc({
   }, []);
 
   return time ? (
-    <div className="flex items-center gap-5">
+    <div className="grid grid-cols-4 gap-5 max-sm:w-full max-sm:grid-cols-2 max-sm:gap-3">
       <div
         className="flex flex-col bg-color-bg items-center justify-center w-[80px] h-[80px] rounded-full -space-y-2
-      max-2xl:w-[75px] max-2xl:h-[75px]"
+      max-2xl:w-[75px] max-2xl:h-[75px] max-sm:h-20 max-sm:w-20 max-sm:justify-self-center"
       >
         <p
           className={tw(
@@ -43,7 +43,7 @@ export default function SecondaryTimeCalc({
       </div>
       <div
         className="flex flex-col bg-color-bg items-center justify-center w-[80px] h-[80px] rounded-full -space-y-2
-      max-2xl:w-[75px] max-2xl:h-[75px]"
+      max-2xl:w-[75px] max-2xl:h-[75px] max-sm:h-20 max-sm:w-20 max-sm:justify-self-center"
       >
         <p
           className={tw(
@@ -57,7 +57,7 @@ export default function SecondaryTimeCalc({
       </div>
       <div
         className="flex flex-col bg-color-bg items-center justify-center w-[80px] h-[80px] rounded-full -space-y-2
-      max-2xl:w-[75px] max-2xl:h-[75px]"
+      max-2xl:w-[75px] max-2xl:h-[75px] max-sm:h-20 max-sm:w-20 max-sm:justify-self-center"
       >
         <p
           className={tw(
@@ -71,7 +71,7 @@ export default function SecondaryTimeCalc({
       </div>
       <div
         className="flex flex-col bg-color-bg items-center justify-center w-[80px] h-[80px] rounded-full -space-y-2
-      max-2xl:w-[75px] max-2xl:h-[75px]"
+      max-2xl:w-[75px] max-2xl:h-[75px] max-sm:h-20 max-sm:w-20 max-sm:justify-self-center"
       >
         <p
           className={tw(

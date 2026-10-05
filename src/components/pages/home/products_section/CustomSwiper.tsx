@@ -15,7 +15,16 @@ export default function CustomSwiper() {
         grid: { rows: 2, fill: "row" },
         breakpoints: {
           1: {
-            slidesPerView: 4,
+            slidesPerView: 1.25,
+            spaceBetween: 12,
+          },
+          480: {
+            slidesPerView: 2,
+            spaceBetween: 14,
+          },
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 16,
           },
           1280: {
             slidesPerView: 4,

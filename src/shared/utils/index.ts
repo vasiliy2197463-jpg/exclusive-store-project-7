@@ -98,7 +98,7 @@ export function calculateDeliveryPrice(
     let sum = 0;
     sum = cartArray.reduce((prev, item) => {
       if (item.discount) {
-        return prev + item.amount * (item.price * (item.discount / 100));
+        return prev + item.amount * (item.price * (1 - item.discount / 100));
       } else {
         return prev + item.amount * item.price;
       }
@@ -118,7 +118,7 @@ export function calculateSubtotal(
   if (cartArray.length > 0) {
     return cartArray.reduce((prev, item) => {
       if (item.discount) {
-        return prev + item.amount * (item.price * (item.discount / 100));
+        return prev + item.amount * (item.price * (1 - item.discount / 100));
       } else {
         return prev + item.amount * item.price;
       }
