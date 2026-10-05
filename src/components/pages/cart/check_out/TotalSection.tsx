@@ -31,14 +31,37 @@ export default function TotalSection({ dict }: IDict) {
   const [paymentVariation, setPaymentVariation] = useState("bank");
   const [saving, setSaving] = useState(false);
   const [notice, setNotice] = useState("");
+  const [couponCode, setCouponCode] = useState("");
+  const [couponPercent, setCouponPercent] = useState(0);
 
   useEffect(() => {
     setPrice({
       deliveryPrice,
       subTotal,
-      total: subTotal + deliveryPrice,
+      total: Math.max(0, subTotal * (1 - couponPercent / 100) + deliveryPrice),
     });
-  }, [deliveryPrice, subTotal]);
+  }, [couponPercent, deliveryPrice, subTotal]);
+
+  async function applyCoupon() {
+    const code = couponCode.trim().toUpperCase();
+    if (!code) {
+      setNotice("Введите промокод.");
+      return;
+    }
+    const supabase = getSupabaseBrowserClient();
+    if (!supabase) {
+      setNotice("Сервис промокодов не подключён.");
+      return;
+    }
+    const { data, error } = await supabase.from("promo_codes").select("discount_percent").eq("code", code).eq("active", true).maybeSingle();
+    if (error || !data) {
+      setCouponPercent(0);
+      setNotice("Промокод не найден или отключён.");
+      return;
+    }
+    setCouponPercent(Number(data.discount_percent));
+    setNotice(`Промокод ${code} применён: скидка ${data.discount_percent}%.`);
+  }
 
   async function placeOrder() {
     setNotice("");
@@ -116,6 +139,7 @@ export default function TotalSection({ dict }: IDict) {
             />
             <DefaultText text={`$${price.subTotal}`} />
           </div>
+          {couponPercent > 0 && <div className="flex items-center justify-between border-b border-color-divider pb-2 text-color-secondary-2"><DefaultText text={`Скидка ${couponPercent}%`} /><DefaultText text={`-$${(price.subTotal * couponPercent / 100).toFixed(2)}`} /></div>}
           <div className="flex items-center justify-between border-b border-color-divider pb-2">
             <DefaultText
               text={dict.pages.cart.checkOut.priceSection.shipping}
@@ -160,13 +184,15 @@ export default function TotalSection({ dict }: IDict) {
         <div className="flex gap-5">
           <input
             type="text"
+            value={couponCode}
+            onChange={(event) => setCouponCode(event.target.value)}
             placeholder={
               dict.pages.cart.checkOut.priceSection.coupon.placeholder
             }
             className="p-4 w-80 text-base rounded-sm border-color-bg-1 border duration-300 transition-colors focus-within:outline-color-bg-1
             max-3xl:p-3 max-2xl:text-sm"
           />
-          <PrimaryButton>
+          <PrimaryButton buttonProps={{ type: "button", onClick: applyCoupon }}>
             {dict.pages.cart.checkOut.priceSection.coupon.apply}
           </PrimaryButton>
         </div>
