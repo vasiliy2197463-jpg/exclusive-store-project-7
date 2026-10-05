@@ -1,3 +1,6 @@
+alter table public.products
+add column if not exists archived boolean not null default false;
+
 insert into public.products (name,slug,description,category,price,old_price,stock,active,archived)
 values
 ('HAVIT HV-G92 Gamepad','havit-hv-g92-gamepad','Game controller','Gaming',96,160,25,true,false),
@@ -17,3 +20,7 @@ values
 ('GP11 Shooter USB Gamepad','gp11-shooter-usb-gamepad','USB game controller','Gaming',660,null,25,true,false),
 ('Quilted Satin Jacket','quilted-satin-jacket','Satin jacket','Clothing',160,null,25,true,false)
 on conflict (slug) do nothing;
+
+select count(*) as products_count, coalesce(sum(stock), 0) as total_stock
+from public.products
+where archived = false;
