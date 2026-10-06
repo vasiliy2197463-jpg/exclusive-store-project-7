@@ -32,7 +32,6 @@ const copy = {
 export default function ProductDetails({ product, locale }: { product: IProductCard; locale: TLanguages }) {
   const text = copy[locale] || copy.ru;
   const productSlug = slugifyProduct(product.name);
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedColor, setSelectedColor] = useState(product.colors?.[0] || "");
   const [rating, setRating] = useState(0);
@@ -106,12 +105,12 @@ export default function ProductDetails({ product, locale }: { product: IProductC
           <div className="order-2 flex gap-3 overflow-x-auto sm:order-1 sm:flex-col">
             {product.images.map((image, index) => (
               <button key={image} onClick={() => setSelectedImage(index)} className={`h-24 w-24 shrink-0 rounded-2xl border bg-neutral-100 p-2 ${selectedImage === index ? "border-black" : "border-transparent"}`}>
-                <Image src={`${basePath}/images/products/${image}`} alt={`${product.name}, фото ${index + 1}`} width={120} height={120} className="h-full w-full object-contain" />
+                <Image src={`/images/products/${image}`} alt={`${product.name}, фото ${index + 1}`} width={120} height={120} className="h-full w-full object-contain" />
               </button>
             ))}
           </div>
           <div className="order-1 relative flex aspect-square items-center justify-center rounded-3xl bg-neutral-100 p-8 sm:order-2">
-            <Image src={`${basePath}/images/products/${product.images[selectedImage]}`} alt={product.name} width={900} height={900} priority className="h-full w-full object-contain" />
+            <Image src={`/images/products/${product.images[selectedImage]}`} alt={product.name} width={900} height={900} priority className="h-full w-full object-contain" />
             <button onClick={toggleFavorite} aria-label="Избранное" className="absolute right-4 top-4 flex h-12 w-12 items-center justify-center rounded-full bg-white shadow">
               {favorite ? <PiHeartFill className="h-6 w-6 text-red-500" /> : <PiHeart className="h-6 w-6" />}
             </button>

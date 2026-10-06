@@ -46,7 +46,6 @@ export default function ProductCard(props: IProductCard) {
   const [amount, setAmount] = useState(0);
   const [cartProducts, setCartProducts] = useRecoilState(cartProductsState);
   const locale = usePathname().split("/")[1] || "ru";
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
   useEffect(() => {
     favoriteProducts.length > 0 &&
@@ -118,26 +117,25 @@ export default function ProductCard(props: IProductCard) {
   }
 
   return (
-    <div className="group flex w-full min-w-0 flex-col items-start gap-3">
+    <div className="group relative flex w-full min-w-0 cursor-pointer flex-col items-start gap-3">
+      <Link
+        href={`/${locale}/product/${slugifyProduct(name)}`}
+        aria-label={`Открыть товар ${name}`}
+        className="absolute inset-0 z-10 rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black"
+      />
       <div className="relative flex aspect-square w-full min-w-0 items-center justify-center overflow-hidden bg-color-secondary p-8 max-sm:p-4">
-        <Link
-          href={`/${locale}/product/${slugifyProduct(name)}`}
-          aria-label={`Открыть товар ${name}`}
-          className="flex h-full w-full items-center justify-center"
-        >
-          <Image
-            alt={name}
-            src={`${basePath}/images/products/${images[0]}`}
-            width={240}
-            height={240}
-            className="h-[72%] w-[72%] object-contain transition-transform duration-300 group-hover:scale-105"
-          />
-        </Link>
+        <Image
+          alt={name}
+          src={`/images/products/${images[0]}`}
+          width={240}
+          height={240}
+          className="h-[72%] w-[72%] object-contain transition-transform duration-300 group-hover:scale-105"
+        />
 
         <>
           {amount !== 0 ? (
             <div
-              className="absolute bottom-0 w-full py-2 bg-color-bg-1 hover:bg-color-bg-1 
+              className="absolute bottom-0 z-20 w-full py-2 bg-color-bg-1 hover:bg-color-bg-1
             transition-all duration-300 ease-in-out rounded-tr-none 
             rounded-tl-none flex items-center justify-between rounded-sm text-color-text-1 px-4 text-xl
             max-2xl:text-base max-2xl:py-1 max-2xl:px-2 max-3xl:h-9
@@ -162,7 +160,7 @@ export default function ProductCard(props: IProductCard) {
               buttonProps={{
                 onClick: () => setAmount(increaseAmount(amount)),
               }}
-              className="absolute bottom-0 w-full py-2 bg-color-bg-1 hover:bg-color-bg-1 group-hover:flex
+              className="absolute bottom-0 z-20 w-full py-2 bg-color-bg-1 hover:bg-color-bg-1 group-hover:flex
               transition-all duration-300 ease-in-out rounded-tr-none rounded-tl-none
               max-2xl:text-base max-2xl:py-1 max-2xl:px-2 max-3xl:h-9"
             >
@@ -174,7 +172,7 @@ export default function ProductCard(props: IProductCard) {
         <>
           <div
             onClick={handleFavoriteClick}
-            className="absolute right-2 top-2 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-color-bg sm:right-3 sm:h-10 sm:w-10"
+            className="absolute right-2 top-2 z-20 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-color-bg sm:right-3 sm:h-10 sm:w-10"
           >
             <>
               {isFavorite ? (
@@ -203,12 +201,9 @@ export default function ProductCard(props: IProductCard) {
       <div
         className={`${poppinsMediumFont.className} grid min-w-0 w-full grid-rows-[auto_auto_auto] items-start gap-2`}
       >
-        <Link
-          href={`/${locale}/product/${slugifyProduct(name)}`}
-          className="line-clamp-2 min-h-10 max-w-full break-words text-base leading-5 text-color-text-3 capitalize hover:underline sm:min-h-12 sm:text-lg sm:leading-6"
-        >
+        <p className="line-clamp-2 min-h-10 max-w-full break-words text-base leading-5 text-color-text-3 capitalize group-hover:underline sm:min-h-12 sm:text-lg sm:leading-6">
           {name}
-        </Link>
+        </p>
         <div className="flex min-h-7 flex-wrap items-center gap-x-2 gap-y-1">
             <p className="text-color-secondary-2 text-lg max-2xl:text-base">
               ${discount ? `${price - (price / 100) * discount}` : price}
@@ -227,7 +222,7 @@ export default function ProductCard(props: IProductCard) {
         </div>
 
         {colors ? (
-          <div className="flex items-center gap-2 mt-3">
+          <div className="relative z-20 flex items-center gap-2 mt-3">
             {colors.map((item, i) => {
               return (
                 <div

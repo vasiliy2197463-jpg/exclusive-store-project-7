@@ -43,7 +43,6 @@ export default function HeaderInputButtons({
   const [activeResult, setActiveResult] = useState(-1);
   const searchRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
   const products = useMemo(() => {
     const unique = new Map<string, (typeof homeSalesSwiper)[number]>();
@@ -189,7 +188,7 @@ export default function HeaderInputButtons({
                   >
                     <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-color-secondary">
                       <Image
-                        src={`${basePath}/images/products/${product.images[0]}`}
+                        src={`/images/products/${product.images[0]}`}
                         alt=""
                         width={56}
                         height={56}

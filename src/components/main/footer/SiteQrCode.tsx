@@ -22,7 +22,7 @@ export default function SiteQrCode({ locale }: { locale: string }) {
         level="H"
         marginSize={1}
         imageSettings={{
-          src: `${basePath}/images/about/luchik-kuzya-vitalik-shopping.png`,
+          src: "/images/about/luchik-kuzya-vitalik-shopping.png",
           width: 28,
           height: 28,
           excavate: true,
