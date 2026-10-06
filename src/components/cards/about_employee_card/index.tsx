@@ -11,13 +11,15 @@ export default function AboutEmployeeCard({
   status,
   name,
 }: IAboutEmployeeCard) {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
   return (
     <div className="flex h-full items-stretch justify-center text-color-text-3">
       <div className="flex h-full w-full max-w-sm flex-col items-start gap-5">
         <div className="w-full bg-color-secondary">
           <Image
             alt={name}
-            src={`/images/about/${image}`}
+            src={`${basePath}/images/about/${image}`}
             width={200}
             height={200}
             className="h-80 object-bottom object-contain mx-14 mt-5

@@ -18,6 +18,7 @@ export default async function page({ params }: { params: { lang: TLanguages } })
       className={tw("pt-8 max-lg:pt-6 max-sm:pt-5", topMarginSaving, bottomMarginSaving, horizontalMarginLimit)}
     >
       <NavigationTrain />
+      <div aria-hidden="true" className="h-2" />
       <AccountSection dict={dict} />
     </div>
   );
