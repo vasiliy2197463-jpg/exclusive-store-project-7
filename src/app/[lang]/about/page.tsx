@@ -13,7 +13,6 @@ import { TLanguages } from "@/shared/types";
 import { getDict } from "@/dictionaries/dictionaries";
 
 export default async function page({ params }: { params: { lang: TLanguages } }) {
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const locale = params.lang;
   const dict = await getDict(locale);
   return (
@@ -46,7 +45,7 @@ export default async function page({ params }: { params: { lang: TLanguages } })
         </div>
         <Image
           alt="girls"
-          src={`${basePath}/images/about/luchik-kuzya-vitalik-shopping.png`}
+          src={"/images/about/luchik-kuzya-vitalik-shopping.png"}
           width={700}
           height={700}
           className="w-[900px] object-contain
