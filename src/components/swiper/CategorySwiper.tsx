@@ -7,7 +7,7 @@ import "swiper/css";
 
 export default function CategorySwiper({ data, swiperProps }: ICategorySwiper) {
   return (
-    <Swiper {...swiperProps}>
+    <Swiper {...swiperProps} className="w-full max-w-full overflow-hidden">
       {data.map((item, i) => {
         return (
           <SwiperSlide key={i}>

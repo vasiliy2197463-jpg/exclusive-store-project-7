@@ -2,6 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.swiper,
+.swiper-wrapper,
+.swiper-slide {
+  max-width: 100%;
+}
+
+.swiper-slide {
+  min-width: 0;
+}
+
 @layer components {
   button {
     -webkit-tap-highlight-color: transparent;

@@ -76,7 +76,7 @@ export default function ProductSwiper({
       simulateTouch
       grabCursor
       watchOverflow
-      className="w-full cursor-grab"
+      className="w-full max-w-full overflow-hidden cursor-grab"
     >
       {products.map((item, i) => (
         <SwiperSlide key={i}>

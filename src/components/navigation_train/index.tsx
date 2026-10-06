@@ -30,7 +30,7 @@ export default function NavigationTrain({
       )}
     >
       <div
-        className="flex items-center gap-3 text-color-text-2 text-base
+        className="flex items-center gap-3 py-2 text-color-text-2 text-base
               max-2xl:text-sm"
       >
         <>
