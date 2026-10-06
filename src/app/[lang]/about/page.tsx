@@ -2,7 +2,6 @@ import NavigationTrain from "@/components/navigation_train";
 import {
   bottomMarginSaving,
   horizontalMarginLimit,
-  topMarginSaving,
 } from "@/shared/constants";
 import { twMerge as tw } from "tailwind-merge";
 import { interSemiboldFont } from "fonts";
@@ -20,13 +19,13 @@ export default async function page({ params }: { params: { lang: TLanguages } })
   return (
     <div
       className={tw(
-        `flex flex-col text-color-text-3 gap-56 pt-8 max-3xl:gap-48 max-2xl:gap-32 max-lg:gap-20 max-lg:pt-6 max-sm:gap-14 max-sm:pt-5`,
-        topMarginSaving,
+        `pt-8 text-color-text-3 max-lg:pt-6 max-sm:pt-5`,
         bottomMarginSaving,
         horizontalMarginLimit
       )}
     >
       <NavigationTrain />
+      <div className="flex flex-col gap-56 max-3xl:gap-48 max-2xl:gap-32 max-lg:gap-20 max-sm:gap-14">
       {/* our story texts */}
       <section className="flex items-center justify-between gap-5 max-lg:flex-col max-lg:items-stretch">
         <div className="flex flex-col flex-[0_1_40%] gap-12 max-3xl:gap-8 max-3xl:flex-[0_1_45%] max-lg:order-2">
@@ -71,6 +70,7 @@ export default async function page({ params }: { params: { lang: TLanguages } })
           <ServiceCard key={i} {...item} />
         ))}
       </section>
+      </div>
     </div>
   );
 }

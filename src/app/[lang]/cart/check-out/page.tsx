@@ -2,7 +2,6 @@ import NavigationTrain from "@/components/navigation_train";
 import {
   bottomMarginSaving,
   horizontalMarginLimit,
-  topMarginSaving,
 } from "@/shared/constants";
 import { twMerge as tw } from "tailwind-merge";
 import FormSection from "@/components/pages/cart/check_out/FormSection";
@@ -16,15 +15,16 @@ export default async function page({ params }: { params: { lang: TLanguages } })
   return (
     <div
       className={tw(
-        "flex items-start justify-between pt-8 max-lg:pt-6 max-sm:pt-5",
-        topMarginSaving,
+        "pt-8 max-lg:pt-6 max-sm:pt-5",
         bottomMarginSaving,
         horizontalMarginLimit
       )}
     >
       <NavigationTrain />
-      <FormSection dict={dict} />
-      <TotalSection dict={dict} />
+      <div className="flex items-start justify-between">
+        <FormSection dict={dict} />
+        <TotalSection dict={dict} />
+      </div>
     </div>
   );
 }

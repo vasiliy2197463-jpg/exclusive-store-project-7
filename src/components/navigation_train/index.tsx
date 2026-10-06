@@ -3,8 +3,6 @@
 import { INavigationTrain } from "types";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { twMerge as tw } from "tailwind-merge";
-import { horizontalMarginLimit } from "@/shared/constants";
 
 const labels: Record<string, Record<string, string>> = {
   ru: { home: "Главная", cart: "Корзина", account: "Аккаунт", wishlist: "Избранное", contact: "Контакты", about: "О нас", login: "Вход", "sign-up": "Регистрация", admin: "Админ-панель", shop: "Магазин", "check-out": "Оформление заказа" },
@@ -23,12 +21,7 @@ export default function NavigationTrain({
   const text = (key: string) => labels[locale]?.[key] || key.replace(/-/g, " ");
 
   return (
-    <div
-      className={tw(
-        "absolute top-14 left-0 max-2xl:top-12",
-        horizontalMarginLimit
-      )}
-    >
+    <nav aria-label="Breadcrumb" className="mb-8 w-full max-lg:mb-6 max-sm:mb-4">
       <div
         className="flex items-center gap-3 py-2 text-color-text-2 text-base
               max-2xl:text-sm"
@@ -66,6 +59,6 @@ export default function NavigationTrain({
           </>
         )}
       </div>
-    </div>
+    </nav>
   );
 }

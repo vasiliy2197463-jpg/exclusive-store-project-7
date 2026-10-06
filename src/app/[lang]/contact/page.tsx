@@ -2,7 +2,6 @@ import NavigationTrain from "@/components/navigation_train";
 import {
   bottomMarginSaving,
   horizontalMarginLimit,
-  topMarginSaving,
 } from "@/shared/constants";
 import Image from "next/image";
 import { twMerge as tw } from "tailwind-merge";
@@ -18,14 +17,13 @@ export default async function page({ params }: { params: { lang: TLanguages } })
   return (
     <div
       className={tw(
-        `flex min-w-0 gap-16 pt-8 max-3xl:gap-14 max-2xl:flex-col max-2xl:gap-8 max-lg:pt-6 max-sm:pt-5`,
-        topMarginSaving,
+        `pt-8 max-lg:pt-6 max-sm:pt-5`,
         horizontalMarginLimit,
         bottomMarginSaving
       )}
     >
       <NavigationTrain />
-
+      <div className="flex min-w-0 gap-16 max-3xl:gap-14 max-2xl:flex-col max-2xl:gap-8">
       <div
         className="text-color-text-3 space-y-8 flex-[0_0_20%] shadow-[0px_0px_20px_1px_rgba(25,25,25,0.1)] p-5
       max-3xl:flex-[0_0_25%] max-2xl:grid max-2xl:w-full max-2xl:grid-cols-[1fr_auto_1fr] max-2xl:items-start max-xl:grid-cols-1"
@@ -123,6 +121,7 @@ export default async function page({ params }: { params: { lang: TLanguages } })
           {dict.pages.contact.form.send}
         </PrimaryButton>
       </form>
+      </div>
     </div>
   );
 }

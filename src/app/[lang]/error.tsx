@@ -2,7 +2,7 @@
 
 import PrimaryButton from "@/components/buttons/PrimaryButton";
 import NavigationTrain from "@/components/navigation_train";
-import { horizontalMarginLimit, topMarginSaving } from "@/shared/constants";
+import { horizontalMarginLimit } from "@/shared/constants";
 import { interMediumFont } from "@/shared/fonts";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -18,12 +18,12 @@ export default function Error({
   return (
     <div
       className={tw(
-        "flex flex-col items-center justify-center gap-20 min-h-[40dvh] mb-28",
-        topMarginSaving,
+        "mb-28 pt-8 max-lg:pt-6 max-sm:pt-5",
         horizontalMarginLimit
       )}
     >
       <NavigationTrain isError />
+      <div className="flex min-h-[40dvh] flex-col items-center justify-center gap-20">
       <div className="flex flex-col text-center gap-10">
         <h1
           className={`${interMediumFont.className} text-8xl capitalize max-2xl:text-6xl`}
@@ -43,6 +43,7 @@ export default function Error({
         <Link href={`/${pathname.split("/")[1]}`}>
           <PrimaryButton>Back to home page</PrimaryButton>
         </Link>
+      </div>
       </div>
     </div>
   );

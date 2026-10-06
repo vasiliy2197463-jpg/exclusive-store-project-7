@@ -4,7 +4,6 @@ import { getDict } from "@/dictionaries/dictionaries";
 import {
   bottomMarginSaving,
   horizontalMarginLimit,
-  topMarginSaving,
 } from "@/shared/constants";
 import { TLanguages } from "@/shared/types";
 import { twMerge as tw } from "tailwind-merge";
@@ -15,10 +14,9 @@ export default async function page({ params }: { params: { lang: TLanguages } })
 
   return (
     <div
-      className={tw("pt-8 max-lg:pt-6 max-sm:pt-5", topMarginSaving, bottomMarginSaving, horizontalMarginLimit)}
+      className={tw("pt-8 max-lg:pt-6 max-sm:pt-5", bottomMarginSaving, horizontalMarginLimit)}
     >
       <NavigationTrain />
-      <div aria-hidden="true" className="h-2" />
       <AccountSection dict={dict} />
     </div>
   );
