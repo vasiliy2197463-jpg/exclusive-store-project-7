@@ -16,15 +16,20 @@ async function visit(directory) {
     if (!textExtensions.has(extname(entry.name))) continue;
 
     const original = await readFile(path, "utf8");
-    const updated = original
-      .replaceAll('"/images/', `"${prefix}/images/`)
-      .replaceAll("'/images/", `'${prefix}/images/`)
-      .replaceAll("url(/images/", `url(${prefix}/images/`)
-      .replaceAll('"/icons/', `"${prefix}/icons/`)
-      .replaceAll("'/icons/", `'${prefix}/icons/`)
-      .replaceAll("url(/icons/", `url(${prefix}/icons/`)
-      .replaceAll('"/google-play.webp', `"${prefix}/google-play.webp`)
-      .replaceAll("'/google-play.webp", `'${prefix}/google-play.webp`);
+    const extension = extname(entry.name);
+    // Next/Image already applies basePath in browser bundles. Rewriting the
+    // same strings inside JavaScript produces /basePath/basePath/images/... .
+    const updated = extension === ".js"
+      ? original
+      : original
+          .replaceAll('"/images/', `"${prefix}/images/`)
+          .replaceAll("'/images/", `'${prefix}/images/`)
+          .replaceAll("url(/images/", `url(${prefix}/images/`)
+          .replaceAll('"/icons/', `"${prefix}/icons/`)
+          .replaceAll("'/icons/", `'${prefix}/icons/`)
+          .replaceAll("url(/icons/", `url(${prefix}/icons/`)
+          .replaceAll('"/google-play.webp', `"${prefix}/google-play.webp`)
+          .replaceAll("'/google-play.webp", `'${prefix}/google-play.webp`);
 
     if (updated !== original) await writeFile(path, updated);
   }
