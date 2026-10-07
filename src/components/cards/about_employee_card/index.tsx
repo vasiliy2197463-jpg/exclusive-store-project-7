@@ -17,7 +17,7 @@ export default function AboutEmployeeCard({
         <div className="w-full bg-color-secondary">
           <Image
             alt={name}
-            src={`/images/about/${image}`}
+            src={"/images/about/" + image}
             width={200}
             height={200}
             className="h-80 object-bottom object-contain mx-14 mt-5
