@@ -28,8 +28,7 @@ const staleBuildRecoveryScript = `
   window.addEventListener("error", (event) => {
     const target = event.target;
     const assetUrl = target && (target.src || target.href) || "";
-    const staleAsset = assetUrl.includes("/_next/static/") ||
-      assetUrl.includes("/images/") || assetUrl.includes("/icons/");
+    const staleAsset = assetUrl.includes("/_next/static/");
     const staleChunk = String(event.message || "").includes("ChunkLoadError") ||
       String(event.message || "").includes("Loading chunk");
     if (staleAsset || staleChunk) recover();

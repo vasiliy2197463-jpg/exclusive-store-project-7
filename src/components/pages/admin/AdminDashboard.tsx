@@ -12,8 +12,6 @@ import {
 import { AiOutlineInstagram } from "react-icons/ai";
 import { FaTelegramPlane, FaVk } from "react-icons/fa";
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
-
 type Tab =
   | "overview"
   | "analytics"
@@ -610,7 +608,7 @@ export default function AdminDashboard() {
       <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-neutral-100">
         {image ? (
           <img
-            src={`${basePath}/images/products/${image}`}
+            src={`/images/products/${image}`}
             alt=""
             className="h-12 w-12 object-contain"
           />
