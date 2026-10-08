@@ -149,6 +149,31 @@ export default function LoginForm({ dict }: { dict: any }) {
     }
   }
 
+  async function sendMagicLink() {
+    const normalizedEmail = email.trim();
+    if (!normalizedEmail) {
+      setMessage("Введите email администра, чтобы получить ссылку для входа.");
+      return;
+    }
+    setSubmitting(true);
+    setMessage("");
+    const supabase = getSupabaseBrowserClient();
+    if (!supabase) {
+      setMessage("Supabase ещё не подключён. Добавьте ключи проекта в .env.local");
+      setSubmitting(false);
+      return;
+    }
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+    const emailRedirectTo = `${window.location.origin}${basePath}/${locale}/account/`;
+    const { error } = await supabase.auth.signInWithOtp({
+      email: normalizedEmail,
+      options: { emailRedirectTo, shouldCreateUser: false },
+    });
+    if (error) setMessage(loginError(error.message));
+    else setMessage("Ссылка для входа отправлена. Откройте письмо на этом же устройстве.");
+    setSubmitting(false);
+  }
+
   async function saveNewPassword(event: FormEvent) {
     event.preventDefault();
     if (newPassword.length < 8) {
@@ -201,6 +226,14 @@ export default function LoginForm({ dict }: { dict: any }) {
         <Image alt="" src="/icons/sign_up/google.svg" width={28} height={28} className="h-7 w-7" />
         <span>Войти через Google</span>
       </OutlinedButton>
+      <button
+        type="button"
+        onClick={sendMagicLink}
+        disabled={submitting}
+        className="rounded-xl border border-neutral-300 px-5 py-4 font-semibold transition-colors hover:border-black disabled:opacity-50"
+      >
+        Получить ссылку для входа на email
+      </button>
       {message && <p className="text-sm text-color-button-1" role="status">{message}</p>}
       <p className="text-center text-sm text-neutral-600">
         Нет аккаунта?{" "}
