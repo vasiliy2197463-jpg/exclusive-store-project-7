@@ -4,12 +4,14 @@ import { FormEvent, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import InputWithLine from "@/components/inputs/InputWithLine";
 import PrimaryButton from "@/components/buttons/PrimaryButton";
+import OutlinedButton from "@/components/buttons/OutlinedButton";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import Link from "next/link";
+import Image from "next/image";
 
 function loginError(message: string) {
   if (message.toLowerCase().includes("invalid login credentials")) {
-    return "Неверный email или пароль. Если вы ещё не регистрировались в этом магазине, создайте новый аккаунт.";
+    return "Неверный email или пароль. Если аккаунт был создан через Google, войдите кнопкой Google ниже.";
   }
   if (message.toLowerCase().includes("email not confirmed")) {
     return "Подтвердите email по ссылке из письма, затем повторите вход.";
@@ -126,6 +128,27 @@ export default function LoginForm({ dict }: { dict: any }) {
     setSubmitting(false);
   }
 
+  async function signInWithGoogle() {
+    setSubmitting(true);
+    setMessage("");
+    const supabase = getSupabaseBrowserClient();
+    if (!supabase) {
+      setMessage("Supabase ещё не подключён. Добавьте ключи проекта в .env.local");
+      setSubmitting(false);
+      return;
+    }
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+    const redirectTo = `${window.location.origin}${basePath}/${locale}/account/`;
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo },
+    });
+    if (error) {
+      setMessage(loginError(error.message));
+      setSubmitting(false);
+    }
+  }
+
   async function saveNewPassword(event: FormEvent) {
     event.preventDefault();
     if (newPassword.length < 8) {
@@ -171,6 +194,13 @@ export default function LoginForm({ dict }: { dict: any }) {
         <PrimaryButton buttonProps={{ type: "submit", disabled: submitting }}>{submitting ? "Входим…" : dict.pages.registration.login.login}</PrimaryButton>
         <button type="button" onClick={forgotPassword} disabled={submitting} className="text-color-button-1 text-lg capitalize disabled:opacity-50 max-2xl:text-base">{dict.pages.registration.login.forgetPassword}</button>
       </div>
+      <OutlinedButton
+        buttonProps={{ type: "button", onClick: signInWithGoogle, disabled: submitting }}
+        className="flex min-w-0 items-center justify-center gap-4 px-5"
+      >
+        <Image alt="" src="/icons/sign_up/google.svg" width={28} height={28} className="h-7 w-7" />
+        <span>Войти через Google</span>
+      </OutlinedButton>
       {message && <p className="text-sm text-color-button-1" role="status">{message}</p>}
       <p className="text-center text-sm text-neutral-600">
         Нет аккаунта?{" "}
