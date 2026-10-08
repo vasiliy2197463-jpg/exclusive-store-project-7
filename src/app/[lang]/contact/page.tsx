@@ -25,7 +25,7 @@ export default async function page({ params }: { params: { lang: TLanguages } })
       <NavigationTrain />
       <div className="flex min-w-0 gap-16 max-3xl:gap-14 max-2xl:flex-col max-2xl:gap-8">
       <div
-        className="text-color-text-3 space-y-8 flex-[0_0_20%] shadow-[0px_0px_20px_1px_rgba(25,25,25,0.1)] p-5
+        className="text-color-text-3 space-y-8 flex-[0_0_20%] self-start shadow-[0px_0px_20px_1px_rgba(25,25,25,0.1)] p-5
       max-3xl:flex-[0_0_25%] max-2xl:grid max-2xl:w-full max-2xl:grid-cols-[1fr_auto_1fr] max-2xl:items-start max-xl:grid-cols-1"
       >
         <div className="flex flex-col items-start gap-4 max-3xl:gap-3">
@@ -53,7 +53,7 @@ export default async function page({ params }: { params: { lang: TLanguages } })
             {dict.pages.contact.infoSection.callPart.phone}
           </p>
         </div>
-        <div className="h-full w-[2px] bg-color-divider max-xl:h-[2px] max-xl:w-full" />
+        <div className="h-[2px] w-full bg-color-divider max-2xl:h-full max-2xl:w-[2px] max-xl:h-[2px] max-xl:w-full" />
         <div className="flex flex-col items-start gap-4 max-3xl:gap-3">
           <div className="flex items-center gap-4">
             <Image
